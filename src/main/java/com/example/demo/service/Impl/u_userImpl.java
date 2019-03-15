@@ -19,7 +19,7 @@ public class u_userImpl implements BaseService<u_user> {
 
     @Override
     public void save(u_user entity) {
-
+        u_userMapper.insert(entity);
     }
 
     @Override
@@ -34,12 +34,12 @@ public class u_userImpl implements BaseService<u_user> {
 
     @Override
     public u_user findById(Long id) {
-        return null;
+        return u_userMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public List<u_user> getAll() {
-        return null;
+        return u_userMapper.getAll();
     }
 
     public List<u_user> selectByMap(Map<String, Object> map){

@@ -19,6 +19,31 @@ public class u_user {
 
     private Integer roleId;
 
+    public u_user(Long id, String nickname, String email, String pswd, java.sql.Timestamp createTime, java.sql.Timestamp lastLoginTime, Long status, Integer roleId) {
+        this.id = id;
+        this.nickname = nickname;
+        this.email = email;
+        this.pswd = pswd;
+        this.createTime = createTime;
+        this.lastLoginTime = lastLoginTime;
+        this.status = status;
+        this.roleId = roleId;
+    }
+
+    public u_user(Long id, String nickname, String email, String pswd, java.sql.Timestamp createTime, java.sql.Timestamp lastLoginTime, Long status) {
+        this.id = id;
+        this.nickname = nickname;
+        this.email = email;
+        this.pswd = pswd;
+        this.createTime = createTime;
+        this.lastLoginTime = lastLoginTime;
+        this.status = status;
+    }
+
+    public u_user(){
+
+    }
+
     public Long getId() {
         return id;
     }
@@ -82,4 +107,5 @@ public class u_user {
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
+
 }

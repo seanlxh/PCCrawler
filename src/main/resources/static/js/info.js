@@ -37,6 +37,15 @@ var pagepz;            //总页数
 var beginpz;
 var endpz;
 
+var pageSize1 = 15;    //每页显示的记录条数
+var curPage1=0;        //当前页
+var lastPage1;        //最后页
+var direct1=0;        //方向
+var len1;            //总行数
+var page1;            //总页数
+var begin1;
+var end1;
+
 var JSONFormat = (function(){
     var _toString = Object.prototype.toString;
 
@@ -238,6 +247,32 @@ function loadXMLDoc1(id)
 }
 
 
+function loadXMLDoc2(id)
+{
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+    {
+        // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {
+        // IE6, IE5 浏览器执行代码
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            var obj = xmlhttp.responseText;
+            $("#json-result").html(obj);
+        }
+    }
+    var url='/netexecute?id='+id;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.send();
+}
+
 function getpara(id){
     $("#json-result").html('检索中');
     while(cars.length!=0){
@@ -254,6 +289,17 @@ function getpara(id){
         content += '<button type="button" class="btn btn-primary" onClick="loadXMLDoc1('+id+')">调用</button>';
         $("#json-result").html(content);
     })
+}
+
+function execute1(id){
+    $("#json-result").html('检索中');
+    while(cars.length!=0){
+        cars.pop();
+    }
+        var content =  '';
+        // content += ('<input type="text" name="id" value= "'+id+'"id="para" class="form-control" style="visibility: hidden;margin-top: opx;"/>');
+        content += '<button type="button" class="btn btn-primary" onClick="loadXMLDoc2('+id+')">调用</button>';
+        $("#json-result").html(content);
 }
 
 
@@ -329,11 +375,11 @@ function refreshTask(){
             template += ("<td>"+ ret[i].userName +"</td>");
             template += ("<td>"+ ret[i].timestamp +"</td>");
             if(ret[i].state == 1)
-                template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="pauseTask('+ret[i].taskID+')">暂停</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="finishTask('+ret[i].taskID+')">结束</button></td>';
+                template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="pauseTask('+ret[i].taskID+')">暂停</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="finishTask('+ret[i].taskID+')">结束</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="deleteTask('+ret[i].taskID+')">删除</button></td>';
             else if(ret[i].state == 2)
-                template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="continueTask('+ret[i].taskID+')">继续</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="finishTask('+ret[i].taskID+')">结束</button></td>';
+                template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="continueTask('+ret[i].taskID+')">继续</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="finishTask('+ret[i].taskID+')">结束</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="deleteTask('+ret[i].taskID+')">删除</button></td>';
             else if(ret[i].state == 3)
-                template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="taskInfo('+ret[i].taskID+')">查看详情</button></td>';
+                template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="taskInfo('+ret[i].taskID+')">查看详情</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="deleteTask('+ret[i].taskID+')">删除</button></td>';
             template += ("</tr>");
         }
         template += "</table>";
@@ -345,6 +391,14 @@ function refreshTask(){
 function pauseTask(id){
     $("#json-result").html('检索中');
     $.getJSON('/collection/pause',{'id': id},function(ret){
+        $("#json-result").html(ret.msg);
+        refreshTask();
+    })
+    return;
+}
+function deleteTask(id) {
+    $("#json-result").html('检索中');
+    $.getJSON('/collection/deleteTask',{'id': id},function(ret){
         $("#json-result").html(ret.msg);
         refreshTask();
     })
@@ -376,20 +430,31 @@ function taskInfo(id) {
 }
 
 
+$.getJSON('/getNetDataSource',function(ret){
+    var template = "<table id=\"dsTable1\" class=\"table table-striped table-bordered\" border=1>";
+    template +=  "<tr class=\"success\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
+    for (var i=0; i<ret.length; i++){
+        template += ("<tr>");
+        template += ("<td>"+ ret[i].dsId +"</td>");
+        template += ("<td>"+ ret[i].dsName +"</td>");
+        template += ("<td>"+ ret[i].dsDesc +"</td>");
+        template += ("<td>"+ ret[i].type +"</td>");
+        template += ("<td>"+ ret[i].timestamp +"</td>");
+        if(ret[i].state == 1)
+            template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="getpara('+ret[i].dsId+')">预览</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="execute1('+ret[i].dsId+')">调用</button></td>';
+        else
+            template += '<td><button type="button" disabled="disabled" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="getpara('+ret[i].dsId+')">预览</button>&nbsp&nbsp&nbsp<button type="button" disabled="disabled" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="execute('+ret[i].dsId+')">调用</button></td>';
+        template += ("</tr>");
+    }
+    template += "</table>";
+    document.getElementById("envtest1").innerHTML=template ;
+    display1();
+})
+
+
 
 
 $.getJSON('/DataSource/showDataSource',function(ret){
-    // var template = '<a id="btn0">asaasa</a>' +
-    //     '                <input id="pageSize" type="text" size="1" maxlength="2" value="getDefaultValue()"/><a> 条 </a> <a href="#" id="pageSizeSet">设置</a>&nbsp;' +
-    //     '                <a id="sjzl"></a>&nbsp;' +
-    //     '                <a  href="#" id="btn1">首页</a>' +
-    //     '                <a  href="#" id="btn2">上一页</a>' +
-    //     '                <a  href="#" id="btn3">下一页</a>' +
-    //     '                <a  href="#" id="btn4">尾页</a>&nbsp;' +
-    //     '                <a>转到&nbsp;</a>' +
-    //     '                <input id="changePage" type="text" size="1" maxlength="4"/>' +
-    //     '                <a>页&nbsp;</a>' +
-    //     '                <a  href="#" id="btn5">跳转</a>';
     var template = "<table id=\"dsTable\" class=\"table table-striped table-bordered\" border=1>";
     template +=  "<tr class=\"success\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
     for (var i=0; i<ret.length; i++){
@@ -400,9 +465,9 @@ $.getJSON('/DataSource/showDataSource',function(ret){
         template += ("<td>"+ ret[i].type +"</td>");
         template += ("<td>"+ ret[i].timestamp +"</td>");
         if(ret[i].state == 1)
-            template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="getpara('+ret[i].dsId+')">测试</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="execute('+ret[i].dsId+')">调用</button></td>';
+            template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="getpara('+ret[i].dsId+')">预览</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="execute('+ret[i].dsId+')">调用</button></td>';
         else
-            template += '<td><button type="button" disabled="disabled" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="getpara('+ret[i].dsId+')">测试</button>&nbsp&nbsp&nbsp<button type="button" disabled="disabled" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="execute('+ret[i].dsId+')">调用</button></td>';
+            template += '<td><button type="button" disabled="disabled" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="getpara('+ret[i].dsId+')">预览</button>&nbsp&nbsp&nbsp<button type="button" disabled="disabled" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="execute('+ret[i].dsId+')">调用</button></td>';
         template += ("</tr>");
     }
     template += "</table>";
@@ -447,11 +512,11 @@ $.getJSON('/task/getTask',function(ret){
         template += ("<td>"+ ret[i].userName +"</td>");
         template += ("<td>"+ ret[i].timestamp +"</td>");
         if(ret[i].state == 1)
-            template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="pauseTask('+ret[i].taskID+')">暂停</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="finishTask('+ret[i].taskID+')">结束</button></td>';
+            template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="pauseTask('+ret[i].taskID+')">暂停</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="finishTask('+ret[i].taskID+')">结束</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="deleteTask('+ret[i].taskID+')">删除</button></td>';
         else if(ret[i].state == 2)
-            template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="continueTask('+ret[i].taskID+')">继续</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="finishTask('+ret[i].taskID+')">结束</button></td>';
+            template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="continueTask('+ret[i].taskID+')">继续</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="finishTask('+ret[i].taskID+')">结束</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="deleteTask('+ret[i].taskID+')">删除</button></td>';
         else if(ret[i].state == 3)
-            template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="taskInfo('+ret[i].taskID+')">查看详情</button></td>';
+            template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="taskInfo('+ret[i].taskID+')">查看详情</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#jsonModal" onClick="deleteTask('+ret[i].taskID+')">删除</button></td>';
         template += ("</tr>");
     }
     template += "</table>";
@@ -470,6 +535,16 @@ function display() {
         document.getElementById("btn0").innerHTML = "当前 " + curPage + "/" + page + " 页    每页 ";
         document.getElementById("sjzl").innerHTML = "数据总量 " + len + "";
         document.getElementById("pageSize").value = pageSize;
+}
+function display1() {
+    len1 = $("#dsTable1 tr").length - 1;
+    page1 = len1 % pageSize1 == 0 ? len1 / pageSize1 : Math.floor(len1 / pageSize1) + 1;
+    curPage1 = 1;
+    displayPage1(1);
+
+    document.getElementById("btn01").innerHTML = "当前 " + curPage1 + "/" + page1 + " 页    每页 ";
+    document.getElementById("sjzl1").innerHTML = "数据总量 " + len1 + "";
+    document.getElementById("pageSize1").value = pageSize1;
 }
 function displayrt() {
     lenrt = $("#dsTablert tr").length - 1;
@@ -650,6 +725,59 @@ $(document).ready(function() {
 });
 // );
 
+function firstPage1() {
+    curPagepz = 1;
+    directpz = 0;
+    displayPage1();
+}
+$(document).ready(function() {
+    $("#btn11").click(function firstPage1() {
+        curPage1 = 1;
+        direct1 = 0;
+        displayPage1();
+    });
+    $("#btn21").click(function frontPage1() {
+        direct1 = -1;
+        displayPage1();
+    });
+    $("#btn31").click(function nextPage1() {
+        direct1 = 1;
+        displayPage1();
+    });
+    $("#btn41").click(function lastPage1() {
+        curPage1 = page1;
+        direct1 = 0;
+        displayPage1();
+    });
+    $("#btn51").click(function changePage1() {
+        curPage1 = document.getElementById("changePage1").value * 1;
+        if (!/^[1-9]\d*$/.test(curPage1)) {
+            alert("请输入正整数");
+            return;
+        }
+        if (curPage1 > page1) {
+            alert("超出数据页面");
+            return;
+        }
+        direct1 = 0;
+        displayPage1();
+    });
+
+
+    $("#pageSizeSet1").click(function setPageSize1() {
+        pageSize1 = document.getElementById("pageSize1").value;
+        if (!/^[1-9]\d*$/.test(pageSize1)) {
+            alert("请输入正整数");
+            return;
+        }
+        len1 = $("#dsTable1 tr").length - 1;
+        page1 = len1 % pageSize1 == 0 ? len1 / pageSize1 : Math.floor(len1 / pageSize1) + 1;
+        curPage1 = 1;
+        direct1 = 0;
+        firstPage1();
+    });
+});
+
 function displayPage(){
     if(curPage <=1 && direct==-1){
         direct=0;
@@ -678,6 +806,39 @@ function displayPage(){
     $("#dsTable tr").hide();
     $("#dsTable tr").each(function(i){
         if((i>=begin && i<=end) || i==0 )
+            $(this).show();
+    });
+
+}
+
+function displayPage1(){
+    if(curPage1 <=1 && direct1==-1){
+        direct1=0;
+        alert("已经是第一页了");
+        return;
+    } else if (curPage1 >= page1 && direct1==1) {
+        direct1=0;
+        alert("已经是最后一页了");
+        return ;
+    }
+
+    lastPage1 = curPage1;
+
+    if (len1 > pageSize1) {
+        curPage1 = ((curPage1 + direct1 + len1) % len1);
+    } else {
+        curPage1 = 1;
+    }
+
+
+    document.getElementById("btn01").innerHTML="当前 " + curPage1 + "/" + page1 + " 页    每页 ";
+
+    begin1=(curPage1-1)*pageSize1 + 1;
+    end1 = begin1 + 1*pageSize1 - 1;
+    if(end1 > len1 ) end1=len1;
+    $("#dsTable1 tr").hide();
+    $("#dsTable1 tr").each(function(i){
+        if((i>=begin1 && i<=end1) || i==0 )
             $(this).show();
     });
 

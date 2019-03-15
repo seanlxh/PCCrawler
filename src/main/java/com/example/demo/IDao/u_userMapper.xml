@@ -20,6 +20,11 @@
     from u_user
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    *
+    from u_user
+  </select>
   <select id="selectByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
     select
     *
@@ -34,10 +39,10 @@
   <insert id="insert" parameterType="com.example.demo.entity.u_user">
     insert into u_user (id, nickname, email, 
       pswd, create_time, last_login_time, 
-      status)
+      status, role_id)
     values (#{id,jdbcType=BIGINT}, #{nickname,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{pswd,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=BIGINT})
+      #{status,jdbcType=BIGINT},#{roleId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.entity.u_user">
     insert into u_user

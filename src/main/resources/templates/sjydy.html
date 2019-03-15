@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="viewport"  content="width=device-width, initial-scale=1"/>
     <title>API平台</title>
 
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
@@ -17,6 +17,7 @@
     <script src="/js/ltpt.js"></script>
     <script src="/js/info.js"></script>
     <script src="/js/addCsv.js"></script>
+    <script src="/js/pathConfig.js"></script>
     <!--[if lt IE 9]>
     <script src="/js/html5shiv.min.js"></script>
     <script src="/js/respond.min.js"></script>
@@ -48,42 +49,27 @@
 <script src="/js/jquery.json.js"></script>
 <script src="/js/json2.js"></script>
 <script src="/js/jsonlint.js"></script>
-<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-    <form role="search">
-        <div class="form-group">
-            <img alt="100x100" src="/images/pc_10360.jpg" />
-        </div>
-    </form>
-    <ul class="nav menu">
-        <li class="active"><a href="add"><span class="glyphicon glyphicon-dashboard"></span>数据源定义</a></li>
-        <li><a href="index"><span class="glyphicon glyphicon-pencil"></span>联调平台</a></li>
-        <li><a href="charts"><span class="glyphicon glyphicon-stats"></span>调用统计</a></li>
-        <li><a href="dzpt.html"><span class="glyphicon glyphicon-list-alt"></span>用户管理</a></li>
-        <li><a href="table"><span class="glyphicon glyphicon-th"></span>参数配置</a></li>
-    </ul>
-    <div style="margin-left: 25px">
-        <div style="margin-top: 100px">
-            <strong>联系我们</strong>
-        </div>
-        <div style="margin-top: 15px">
-            <p>电话：17862702798</p>
-        </div>
-    </div>
-</div><!--/.sidebar-->
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+<div class="col-sm-11 col-sm-offset-1 col-lg-11 col-lg-offset-1 main">
     <ul id="myTab" class="nav nav-tabs">
         <li class="active">
             <a href="#home" data-toggle="tab">
-                java数据源增加
+                新增数据采集接口（java）
             </a>
         </li>
         <li>
             <a href="#net" data-toggle="tab">
-                .NET数据源增加
+                新增数据采集接口（.net）
             </a>
         </li>
+        <li>
+            <a href="#path" data-toggle="tab">
+                地址与目录设置
+            </a>
+        </li>
+        <li><a href="#realtime" data-toggle="tab">数据采集任务</a></li>
+        <li><a href="#shuju" data-toggle="tab">数据源配置</a></li>
         <div class="col-md-offset-4">
-            <li><a href="http://wiki.baidu.com/pages/viewpage.action?pageId=210687467" target="_blank" class="dropdown pull-right">使用帮助</a></li>
+            <li><a href="../help" target="_blank" class="dropdown pull-right">使用帮助</a></li>
         </div>
     </ul>
     <div id="myTabContent" class="tab-content">
@@ -110,12 +96,12 @@
                                 </select>
                             </div>
                         </div>
-                        列名：
+                        列名
                         <div class="input-group col-xs-12">
-                            <input type="text" name="columnName" id="columnName" class="form-control"
-                                      style="width: 300px;" value="[]"/>
+                            <input disabled="disabled" type="text" name="columnName" id="columnName" class="form-control"
+                                      style="width: 300px;" placeholder="[]"/>
                         </div>
-                        <p>上传csv: <input type="file" name="fileName"/></p>
+                        <p>上传函数逻辑文件: <input type="file" name="fileName"/></p>
                         <p>上传jar包: <input type="file" name="fileName" multiple="multiple"/></p>
                     </div>
                         <input class="btn btn-primary" type="submit" value="提交"/>
@@ -133,7 +119,7 @@
         <div class="tab-pane fade" id="net">
             <div class="row">
                 <div class="col-lg-12">
-                    <form action="../csvjarfileUpload" method="post" enctype="multipart/form-data">
+                    <form action="../netcsvjarfileUpload" method="post" enctype="multipart/form-data">
                         数据源名称:
                         <div>
                             <div class="input-group col-xs-12">
@@ -155,9 +141,9 @@
                             列名：
                             <div class="input-group col-xs-12">
                                 <input type="text" name="columnName" id="columnNamecsv" class="form-control"
-                                       style="width: 300px;" value="[]"/>
+                                       style="width: 300px;" placeholder="[]"/>
                             </div>
-                            <p>上传csv: <input type="file" name="fileName"/></p>
+                            <p>上传函数逻辑文件: <input type="file" name="fileName"/></p>
                             <p>上传dll: <input type="file" name="fileName" multiple="multiple"/></p>
                         </div>
                         <input class="btn btn-primary" type="submit" value="提交"/>
@@ -171,8 +157,91 @@
 
         </div><!--/.realtime-->
 
+        <div class="tab-pane fade" id="path">
+            <div class="row">
+                <div class="col-lg-12">
+                        <div>
+                            java csv文件地址:
+                            <div class="input-group col-xs-12">
+                                <input type="text" name="javacsv" id="javacsv" class="form-control"
+                                       style="width: 400px;" placeholder=""/>
+                                <button class="btn btn-primary" onclick="editPath('javacsv','java')">修改</button>
+                            </div>
+                            java jar包地址:
+                            <div class="input-group col-xs-12">
+                                <input type="text" name="javajar" id="javajar" class="form-control"
+                                       style="width: 400px;" placeholder=""/>
+                                <button class="btn btn-primary" onclick="editPath('javajar','java')">修改</button>
+                            </div>
+                            .NET csv文件地址:
+                            <div class="input-group col-xs-12">
+                                <input type="text" name="netcsv" id="netcsv" class="form-control"
+                                       style="width: 400px;" placeholder=""/>
+                                <button class="btn btn-primary" onclick="editPath('netcsv','net')">修改</button>
+                            </div>
+                            .NET dll地址:
+                            <div class="input-group col-xs-12">
+                                <input type="text" name="netdll" id="netdll" class="form-control"
+                                       style="width: 400px;" placeholder=""/>
+                                <button class="btn btn-primary" onclick="editPath('netdll','net')">修改</button>
+                            </div>
+                            Hadoop推送地址及账户密码：
+                            <div class="input-group col-xs-12">
+                                <input type="text" name="hadoop" id="hadoop" class="form-control"
+                                       style="width: 400px;" placeholder=""/>
+                                <button class="btn btn-primary" onclick="editHadoop('hadoop')">修改</button>
+                            </div>
+                            数据目录设置
+                            <div class="input-group col-xs-12">
+                                <input type="text" name="hadoop" id="index" class="form-control"
+                                       style="width: 400px;" placeholder=""/>
+                                <button class="btn btn-primary" onclick="editHadoop('hadoop')">修改</button>
+                            </div>
+                        </div>
+                        <!--<div id="resulttest"></div>-->
+                        <!--<div class="form-group"></div>-->
+                </div>
+
+
+
+            </div>
+
+
+        </div><!--/.shuju-->
+
+        <div class="tab-pane fade" id="realtime">
+            <div class="row"> </div>
+            <a id="btn0rt"></a>
+            <input id="pageSizert" type="text" size="1" maxlength="2" value="getDefaultValue()"/><a> 条 </a> <a href="#" id="pageSizeSetrt">设置</a>&nbsp;
+            <a id="sjzlrt"></a>&nbsp;
+            <a  href="#" id="btn1rt">首页</a>
+            <a  href="#" id="btn2rt">上一页</a>
+            <a  href="#" id="btn3rt">下一页</a>
+            <a  href="#" id="btn4rt">尾页</a>&nbsp;
+            <a>转到&nbsp;</a>
+            <input id="changePagert" type="text" size="1" maxlength="4"/>
+            <a>页&nbsp;</a>
+            <a  href="#" id="btn5rt">跳转</a>
+            <div id="tabtest"></div>
+
+        </div><!--/.realtime-->
+
         <div class="tab-pane fade" id="shuju">
             <div class="row"> </div>
+
+
+            <a id="btn0pz"></a>
+            <input id="pageSizepz" type="text" size="1" maxlength="2" value="getDefaultValue()"/><a> 条 </a> <a href="#" id="pageSizeSetpz">设置</a>&nbsp;
+            <a id="sjzlpz"></a>&nbsp;
+            <a  href="#" id="btn1pz">首页</a>
+            <a  href="#" id="btn2pz">上一页</a>
+            <a  href="#" id="btn3pz">下一页</a>
+            <a  href="#" id="btn4pz">尾页</a>&nbsp;
+            <a>转到&nbsp;</a>
+            <input id="changePagepz" type="text" size="1" maxlength="4"/>
+            <a>页&nbsp;</a>
+            <a  href="#" id="btn5pz">跳转</a>
+
             <div id="peizhi"></div>
 
         </div><!--/.shuju-->

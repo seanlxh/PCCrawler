@@ -44,4 +44,16 @@ public class indexController {
     public String form(HttpServletRequest request, Model model){
         return "forms";
     }
+    @RequestMapping("/usermanage")
+    public String usermanage(HttpServletRequest request, Model model){
+        return "usermanage";
+    }
+    @RequestMapping("/serviceList")
+    public String serviceList(HttpServletRequest request, Model model){
+        return "serviceList";
+    }
+    @RequestMapping("/serviceDetail")
+    public String serviceDetail(HttpServletRequest request, Model model){
+        return "serviceDetail";
+    }
 }

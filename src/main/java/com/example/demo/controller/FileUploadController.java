@@ -3,10 +3,7 @@ import com.example.demo.entity.dataSource;
 import com.example.demo.entity.functionLogic;
 import com.example.demo.entity.paraInfo;
 import com.example.demo.entity.resultColumn;
-import com.example.demo.service.Impl.dataSourceImpl;
-import com.example.demo.service.Impl.functionLogicImpl;
-import com.example.demo.service.Impl.paraInfoImpl;
-import com.example.demo.service.Impl.resultColumnImpl;
+import com.example.demo.service.Impl.*;
 import com.example.demo.util.jsonUtil;
 import net.sf.json.JSONArray;
 import org.springframework.stereotype.Controller;
@@ -32,6 +29,8 @@ public class FileUploadController {
     private functionLogicImpl functionLogicService;
     @Resource
     private paraInfoImpl paraInfoService;
+    @Resource
+    private pathImpl pathService;
     /*
      * 获取file.html页面
      */
@@ -120,13 +119,19 @@ public class FileUploadController {
      * 实现多文件上传
      * */
     @RequestMapping(value="csvjarfileUpload",method= RequestMethod.POST)
-    public @ResponseBody String csvjarfileUpload(HttpServletRequest request){
+    public String csvjarfileUpload(HttpServletRequest request){
         long time =  System.currentTimeMillis();
         List<MultipartFile> files = ((MultipartHttpServletRequest)request).getFiles("fileName");
-        String name = request.getParameter("name");
-        String desc = request.getParameter("desc");
+        String name = null;
+        String desc = null;
+        try {
+            name = new String(request.getParameter("name").getBytes("gbk"),"UTF-8");
+            desc = new String(request.getParameter("desc").getBytes("gbk"),"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         int type = Integer.valueOf(request.getParameter("type"));
-        dataSource ds = new dataSource(time,name,desc,type,time,1);
+        dataSource ds = new dataSource(time,name+"(java)",desc,type,time,1);
         dataSourceService.save(ds);
         String columnName = request.getParameter("columnName");
         String columnTitle = "";
@@ -143,11 +148,11 @@ public class FileUploadController {
         resultColumn rc = new resultColumn(time,jsonArray.size(),columnTitle);
         resultColumnService.save(rc);
         if(files.isEmpty()){
-            return "false";
+            return "fail";
         }
 
-        String path1 = "/Users/seanlxh/Library/ApacheTomcat/webapps/demo-0.0.1-SNAPSHOT/WEB-INF/lib" ;
-        String path2 = "/Users/seanlxh/Library/ApacheTomcat/webapps/demo-0.0.1-SNAPSHOT/WEB-INF/lib" ;
+        String path1 = pathService.findById("java").getCsvpath() ;
+        String path2 = pathService.findById("java").getLibpath() ;
 
         MultipartFile file1 = files.get(0);
 
@@ -156,7 +161,7 @@ public class FileUploadController {
         System.out.println(fileName + "-->" + size);
         File dest1;
         if(file1.isEmpty()){
-            return "false";
+            return "fail";
         }else{
             dest1 = new File(path1 + "/" + fileName);
 
@@ -168,7 +173,7 @@ public class FileUploadController {
             }catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-                return "false";
+                return "fail";
             }
         }
         for(int i = 1 ; i < files.size(); i ++){
@@ -176,7 +181,7 @@ public class FileUploadController {
             File dest2;
             String fileName2 = file2.getOriginalFilename();
             if(file2.isEmpty()){
-                return "false";
+                return "fail";
             }
             else{
                 dest2 = new File(path2 + "/" + fileName2);
@@ -188,7 +193,7 @@ public class FileUploadController {
                 }catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
-                    return "false";
+                    return "fail";
                 }
             }
 
@@ -253,6 +258,6 @@ public class FileUploadController {
         }
 
 
-        return "true";
+        return "success";
     }
 }

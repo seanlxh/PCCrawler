@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.DTO.dataSourceDTO;
 import com.example.demo.DTO.taskDTO;
-import com.example.demo.entity.dataSource;
 import com.example.demo.entity.dataTask;
-import com.example.demo.service.Impl.dataSourceImpl;
 import com.example.demo.service.Impl.dataTaskImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +21,23 @@ public class taskController {
     @Resource
     private dataTaskImpl dataTaskService;
 
+    @RequestMapping("/getTaskByID")
+    @ResponseBody
+    public List<taskDTO> getTaskByID(HttpServletRequest request, Model model){
+        Long Id = Long.parseLong(request.getParameter("id"));
+        List<dataTask> tasks = this.dataTaskService.findByDsId(Id);
+        List<taskDTO> res = new ArrayList<taskDTO>();
+        for(int i = 0 ; i < tasks.size(); i ++) {
+            String result;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            long lt = new Long(tasks.get(i).getTimestamp());
+            Date date = new Date(lt);
+            result = simpleDateFormat.format(date);
+            taskDTO tmp = new taskDTO(tasks.get(i).getTaskId(),tasks.get(i).getDsId(),tasks.get(i).getState(),tasks.get(i).getUsername(),result,tasks.get(i).getThreadId());
+            res.add(tmp);
+        }
+        return res;
+    }
     @RequestMapping("/getTask")
     @ResponseBody
     public List<taskDTO> toIndex(HttpServletRequest request, Model model){
@@ -41,7 +55,23 @@ public class taskController {
         }
         return res;
     }
-
+    @RequestMapping("/getUserTask")
+    @ResponseBody
+    public List<taskDTO> getUserTask(HttpServletRequest request, Model model){
+        //int userId = Integer.parseInt(request.getParameter("id"));
+        List<dataTask> tasks = this.dataTaskService.findByName(request.getParameter("id"));
+        List<taskDTO> res = new ArrayList<taskDTO>();
+        for(int i = 0 ; i < tasks.size(); i ++) {
+            String result;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            long lt = new Long(tasks.get(i).getTimestamp());
+            Date date = new Date(lt);
+            result = simpleDateFormat.format(date);
+            taskDTO tmp = new taskDTO(tasks.get(i).getTaskId(),tasks.get(i).getDsId(),tasks.get(i).getState(),tasks.get(i).getUsername(),result,tasks.get(i).getThreadId());
+            res.add(tmp);
+        }
+        return res;
+    }
 }
 
 

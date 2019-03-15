@@ -32,6 +32,11 @@ public class dataTaskImpl implements BaseService<dataTask> {
 
     }
 
+    public void delete(Long id) {
+        dataTaskDao.deleteByPrimaryKey(id);
+        dataTaskOverTimeDao.deleteByPrimaryKey(id);
+    }
+
     @Override
     public void update(dataTask entity) {
 
@@ -41,6 +46,12 @@ public class dataTaskImpl implements BaseService<dataTask> {
     public dataTask findById(Long id) {
         return dataTaskDao.selectByPrimaryKey(id);
     }
+
+    public List<dataTask> findByName(String name) {
+        return dataTaskDao.selectByName(name);
+    }
+
+    public List<dataTask> findByDsId(Long id){return dataTaskDao.findByDsId(id);}
 
     @Override
     public List<dataTask> getAll() {

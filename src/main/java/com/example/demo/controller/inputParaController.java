@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.sun.deploy.config.JREInfo.getAll;
+
 import static java.lang.System.currentTimeMillis;
 
 @Controller

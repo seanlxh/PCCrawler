@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>API平台-服务详情</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link  href="/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+	<link  href="/css/monui.css" type="text/css" rel="stylesheet" />
+    <link  href="/css/common3.css" type="text/css" rel="stylesheet" />
+    <link  href="/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" />
+    <link  href="/css/common1.css" type="text/css" rel="stylesheet" />
+    <!--<link  href="/css/commonList.css" type="text/css" rel="stylesheet" />-->
+    <link  href="/css/iconfont1.css" type="text/css" rel="stylesheet" />
+    <link  href="/css/iconfont2.css" type="text/css" rel="stylesheet" />
+    <link  href="/css/iconfont3.css" type="text/css" rel="stylesheet" />
+    <link  href="/css/iconfont4.css" type="text/css" rel="stylesheet" />
+    <link  href="/css/easydialog.css" type="text/css" rel="stylesheet" />
+    <!--<link  href="/css/bootstrap.css" type="text/css" rel="stylesheet" />-->
+    <link  href="/css/common2.css" type="text/css" rel="stylesheet" />
+    <link  href="/css/commonDetail.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+	<script type="text/javascript" src="/js/form.js"></script>
+	<script type="text/javascript" src="/js/common.js"></script>
+	<script type="text/javascript" src="/js/dialog1.js"></script>
+	<script type="text/javascript" src="/js/jquery.pagination.js"></script>
+	<script type="text/javascript" src="/js/jquery.dcjqaccordion.2.7.js"></script>
+	<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="/js/dmp-datatable.js"></script>
+	<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/js/messages_cn.js"></script>
+	<script type="text/javascript" src="/js/common.js"></script>
+	<script type="text/javascript" src="/js/jquery.form.js"></script>
+	<script type="text/javascript" src="/js/highcharts.js"></script>
+	<script type="text/javascript" src="/js/template1.js"></script>
+	<script type="text/javascript" src="/js/template2.js"></script>
+	<script type="text/javascript" src="/js/loginDialog.js"></script>
+	<script type="text/javascript" src="/js/md5.js"></script>
+	<script type="text/javascript" src="/js/detectBrowser.js"></script>
+	<script type="text/javascript" src="/js/tags-ball.js"></script>
+	<script type="text/javascript" src="/js/echarts.js"></script>
+	<script type="text/javascript" src="/js/apiDetail.js"></script>
+</head><!-- 公用样式表 -->
+<!-- 公用js -->
+<!-- 公用样式表 -->
+<!-- 公用js -->
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+<!--[if lt IE 9]>
+	<script src="/js/html5shiv.js"></script>
+	<script src="/js/respond.min.js"></script>
+<![endif]-->
+
+<body>
+		<link rel="stylesheet" type="text/css" href="/css/header.css" />
+<script src="/js/dialog2.js"></script>
+<style>
+.modal {
+ z-index: 10001;
+}
+.modal-backdrop ~ .modal-dialog{
+z-index: 1041;
+}
+</style>
+        <style>
+            .m-ft{
+                height: auto;
+                padding: 20px 0;
+            }
+            .m-ft .link-list {
+                margin-bottom: 15px;
+            }
+            .m-ft .link-list > ul > li a{
+                font-size: 16px;
+            }
+            .m-ft p{
+                margin: 10px 0 5px;
+                font-size: 14px;
+            }
+            .m-ft a{
+                font-size: 14px;
+            }
+        </style>
+
+<!--<input type="hidden" id="logoutUrl" value="http://data.sd.gov.cn/odweb/uc/index/Index.do?method=logoutAll"/>-->
+<!--<input type="hidden" id="dataUrl" value="http://data.sd.gov.cn/odweb"/>-->
+<!--<input type="hidden" id="uc_home_url" value="http://data.sd.gov.cn/odweb"/>-->
+<!--<input type="hidden" id="loginAjax" value="http://data.sd.gov.cn/odweb/uc/login/Login.do?method=login&callbackparam=?"/>-->
+<!--<input type="hidden" id="register_url" value="http://data.sd.gov.cn/odweb/uc/index/signup.htm"/>-->
+
+
+<div class="sy_line"></div>
+<iframe id="jnIframe" style="display: none;"></iframe>
+<iframe id="qdIframe" style="display: none;"></iframe>
+<style>
+.modal-dialog{
+	z-index: 1051;
+}
+</style>
+<div class="main">
+    <div class="g-main">
+        <!--<div class="sidebar side-r">-->
+
+<!--<div class="cata-rank">-->
+	<!--<div class="right-title">-->
+		<!--<span>使用排行</span>-->
+	<!--</div>-->
+	<!--<ul class="rank-list">-->
+		<!---->
+			<!--<li><span>1</span> <a-->
+				<!--href="http://data.sd.gov.cn:80/odweb/catalog/catalogDetail.htm?cata_id=370131285"-->
+				<!--target="_blank">济南市公积金缴存、提取业务经办网点</a></li>-->
+		<!---->
+			<!--<li><span>2</span> <a-->
+				<!--href="http://data.sd.gov.cn:80/odweb/catalog/catalogDetail.htm?cata_id=370131679"-->
+				<!--target="_blank">济南市校外托管场所登记信息（小饭桌）</a></li>-->
+		<!---->
+			<!--<li><span>3</span> <a-->
+				<!--href="http://data.sd.gov.cn:80/odweb/catalog/catalogDetail.htm?cata_id=65082"-->
+				<!--target="_blank">山东省公安厅互动交流</a></li>-->
+		<!---->
+			<!--<li><span>4</span> <a-->
+				<!--href="http://data.sd.gov.cn:80/odweb/catalog/catalogDetail.htm?cata_id=370130763"-->
+				<!--target="_blank">教育部批准的济南市市属高等学校名单</a></li>-->
+		<!---->
+			<!--<li><span>5</span> <a-->
+				<!--href="http://data.sd.gov.cn:80/odweb/catalog/catalogDetail.htm?cata_id=64981"-->
+				<!--target="_blank">山东省公安厅文件法规</a></li>-->
+		<!---->
+			<!--<li><span>6</span> <a-->
+				<!--href="http://data.sd.gov.cn:80/odweb/catalog/catalogDetail.htm?cata_id=370134997"-->
+				<!--target="_blank">济南市养老金发放银行网点</a></li>-->
+		<!---->
+			<!--<li><span>7</span> <a-->
+				<!--href="http://data.sd.gov.cn:80/odweb/catalog/catalogDetail.htm?cata_id=8814830dca304125bea6a5af094f4908"-->
+				<!--target="_blank">东营市土地供应信息</a></li>-->
+		<!---->
+			<!--<li><span>8</span> <a-->
+				<!--href="http://data.sd.gov.cn:80/odweb/catalog/catalogDetail.htm?cata_id=370152675"-->
+				<!--target="_blank">济南市青少年知识产权教育实践基地项目名单</a></li>-->
+		<!---->
+			<!--<li><span>9</span> <a-->
+				<!--href="http://data.sd.gov.cn:80/odweb/catalog/catalogDetail.htm?cata_id=17e38b4fec89471ba249e608dc947c3c"-->
+				<!--target="_blank">东营市二级医院名单</a></li>-->
+		<!---->
+			<!--<li><span>10</span> <a-->
+				<!--href="http://data.sd.gov.cn:80/odweb/catalog/catalogDetail.htm?cata_id=20180612141519108300"-->
+				<!--target="_blank">临沂商城专业批发市场电子档案</a></li>-->
+		<!---->
+	<!--</ul>-->
+<!--</div>-->
+
+			<!---->
+
+
+
+
+
+
+<!--<div class="cata-hot-tag">-->
+    <!--<div class="right-title">-->
+        <!--<span>数据关键词</span>-->
+    <!--</div>-->
+    <!--<div class="keyword-list" id="keyword-list">-->
+    	 <!---->
+    		<!--<a href="javascript:void(0)">山东省</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">信息</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">年份</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">单位</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">省统计局</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">年度</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">企业名称</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">企业</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">备注</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">名单</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">省工商局</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">项目名称</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">姓名</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">地区</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">发证日期</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">主要</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">省水利厅</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">指标</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">时间</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">名称</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">机构</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">公共管理、社会保障和社会组织</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">情况</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">单位名称</a>-->
+    	<!---->
+    		<!--<a href="javascript:void(0)">项目</a>-->
+    	<!---->
+    <!--</div>-->
+<!--</div>-->
+
+
+
+
+
+
+<!--<div class="cata-app">-->
+    <!--<div class="right-title">-->
+        <!--<span>推荐应用</span>-->
+    <!--</div>-->
+    <!--<div class="app-list">-->
+
+    <!--</div>-->
+<!--</div>-->
+
+        <div class="container">
+            <div class="detail-right">
+                <div class="right-title">
+                    <div class="detail-header">
+                        <span class="detail-title" id="detail-titlename"></span>
+                        <div class="detail-operation">
+                        	<span class="detail-share" onclick="getPara()" data-target="#jsonModal" data-toggle="modal"><i class="iconfont">&#xe001;</i><em>服务预览</em></span>
+                            <span class="detail-share" onclick="serviceApply('75202db76f5641f0a43b3a7785abdcc9')"><i class="iconfont">&#xe001;</i><em>启动任务</em></span>
+                            
+                            	
+                            	
+                            		<span class="detail-collection"><i class="iconfont">&#xe001;</i><em>收藏</em></span>
+                            	
+                            
+                        </div>
+                    </div>
+                    <div class="detail-simple-info" id="detail-simple-info">
+
+
+                    </div>
+                </div>
+                <div class="m-tab">
+                    <div class="right-nav tab-header">
+                        <ul>
+                            <li class="data-info active"><i class="iconfont icon-xinxi"></i>接口描述</li>
+                            <li class="data-table"><i class="iconfont">&#xe6b3;</i>错误代码</li>
+                            <li class="data-api"><i class="iconfont icon-jinru"></i>任务记录</li>
+                            <li class="data-download" onclick="showLine('75202db76f5641f0a43b3a7785abdcc9')"><i class="iconfont">&#xe670;</i>服务质量</li>
+                        </ul>
+                    </div>
+                    <input type="hidden" name="serviceId" id="serviceId" value="75202db76f5641f0a43b3a7785abdcc9"/>
+                    <input type="hidden" name="serviceTitle" id="serviceTitle" value="山东省农村低保人员信息分页查询服务"/>
+                    <input type="hidden" id="odWebUrl" value="http://data.sd.gov.cn/odweb"/>
+                    <div class="detail-info-list tab-body">
+                        <ul>
+                            <li>
+                                <div class="detail-api">
+                                    <ul class="api-list">
+                                        <li>
+                                            <div class="api-body">
+                                                <div class="api-body-left">
+                                                    <div class="api-part">
+                                                        <div class="api-title"><i class="iconfont icon-yingyong"></i>功能说明</div>
+                                                        <div class="api-detail" id="api-detailname"></div>
+                                                    </div>
+                                                    <div class="api-part">
+                                                        <div class="api-title"><i class="iconfont icon-APIjieru"></i>调用说明</div>
+                                                        <div class="api-detail">
+                                                            <div>调用方式：rtf</div>
+                                                            <div>请求地址：</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="api-part">
+                                                        <div class="api-title"><i class="iconfont icon-jinru"></i>请求参数</div>
+                                                        <div class="api-detail">
+                                                            <div>所有参数都需进行URL编码，编码时请遵守 RFC 1738。</div>
+                                                            <div class="api-table">
+                                                                <div>通用参数</div>
+                                                                <table>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th width="25%">参数名称</th>
+                                                                        <th width="15%">是否必须</th>
+                                                                        <th width="10%">类型</th>
+                                                                        <th width="50%">描述</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td><span>access_token</span></td>
+                                                                        <td><span>必填</span></td>
+                                                                        <td><span>字符</span></td>
+                                                                        <td class="api-desc">OAuth2.0验证授权后获得的token</td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="api-table" id="privateapi_table">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="api-part">
+                                                        <div class="api-title"><i class="iconfont icon-chexiao"></i>返回参数</div>
+                                                        <div class="api-detail">
+                                                            <div class="api-table">
+                                                                <table>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th width="25%">返回属性名称</th>
+                                                                        <th width="75%">描述</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    	
+                                                                    		
+                                                                    		
+			                                                                    <tr>
+			                                                                        <td colspan="2" align="center"><span>无返回参数</span></td>
+			                                                                    </tr>                                                                    		
+                                                                    		
+                                                                    	
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="api-part">
+                                                        <div class="api-title"><i class="iconfont icon-APIjieru"></i>测试用例</div>
+                                                         <div class="api-detail">
+                                                            <div><span>
+                                                            	
+																
+																	暂无
+	                                                            
+															</span></div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="detail-api">
+                                    <ul class="api-list">
+                                        <li>
+                                            <div class="api-body">
+                                                <div class="api-body-left">
+                                                    <div class="api-part">
+                                                        <div class="api-title"><i class="iconfont">&#xe69e;</i>服务级错误码参照</div>
+                                                        <div class="api-detail">
+                                                            <div class="api-table">
+                                                                <table>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th width="25%">错误码</th>
+                                                                        <th width="75%">说明</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    	
+                                                                    		
+                                                                    			
+				                                                                    
+                                                                    			
+                                                                    			
+	                                                                    			<tr>
+	                                                                    				<td colspan="2" align="center">暂无服务级错误码数据</td>
+	                                                                    			</tr>
+                                                                    			
+                                                                    		
+                                                                    		
+                                                                    	
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="api-part">
+                                                        <div class="api-title"><i class="iconfont">&#xe69e;</i>系统级错误码参照</div>
+                                                        <div class="api-detail">
+                                                            <div class="api-table">
+                                                                <table>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th width="25%">错误码</th>
+                                                                        <th width="75%">说明</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+	                                                                    
+	                                                                   		
+	                                                                    	
+	                                                                    	    <tr>
+	                                                                    			<td colspan="2" align="center">暂无系统级错误码数据</td>
+	                                                                    		</tr>
+	                                                                    	
+	                                                                    
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="detail-api">
+                                    <ul class="api-list">
+                                        <li>
+                                            <div class="api-body">
+                                                <div class="api-body-left">
+                                                    <div class="api-part">
+                                                        <div class="api-title"><i class="iconfont">&#xe69c;</i>调用任务情况</div>
+                                                        <div class="api-detail">
+                                                            <div class="api-table" id="api-table">
+
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                               <div class="api-chart" id="api-line"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="modal fade" id="jsonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">json数据</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="json-result">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div class="m-ft">
+    <div class="g-main">
+    </div>
+    <p>联系电话：13269696615</p>
+    <a href="http://www.miitbeian.gov.cn/" target="_blank">鲁ICP备05051451号</a>
+</div>
+
+</body>
+</html>
