@@ -101,17 +101,14 @@ public class JDBCUtil {
             ResultSet rs = meta.getTables(null, null, tableName, type);
             flag = rs.next();
             if(!flag){
-                String sql = "CREATE TABLE "+tableName +
-                        " (data VARCHAR(65535))";
-
+                String sql = "CREAT TABLE "+tableName +
+                        " (data LONGTEXT)";
                 stmt.executeUpdate(sql);
             }
-            String sql = "INSERT INTO t"+tableName+" VALUES("+ data+ ")";
-                    stmt.addBatch(sql);
-                    int[] updateCounts = stmt.executeBatch();
-                    conn.commit();
-                    stmt.clearBatch();
-
+            String sql = "INSERT INTO "+tableName+" VALUES('"+ data + "')";
+            System.out.println(sql);
+            stmt.execute(sql);
+            conn.commit();
             } catch (SQLException ex) {
             ex.printStackTrace();
         }

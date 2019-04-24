@@ -51,13 +51,11 @@ public class AndroidDataController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String result = new BufferedReader(new InputStreamReader(reader))
-                .lines().parallel().collect(Collectors.joining(System.lineSeparator()));
+        String result = request.getParameter("data");
         result = unicodeToString(result);
-
-
         Map<String,Object> map = new HashMap<String, Object>();
         String tablename = request.getParameter("tablename");
+
         JDBCUtil jdbcUtil = new JDBCUtil();
         jdbcUtil.insertData(tablename,result);
         System.out.println(result);
