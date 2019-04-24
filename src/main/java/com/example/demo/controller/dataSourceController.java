@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.*;
 import com.example.demo.service.Impl.*;
-import com.sun.tools.corba.se.idl.StringGen;
 import javafx.scene.control.TreeItem;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.*;
 
 import static com.example.demo.util.classUtil.*;
@@ -63,41 +65,37 @@ public class dataSourceController {
                     ArrayList<Object> objectArray = new ArrayList<Object>();
                     ArrayList<Object> curInputClasses = new ArrayList<Object>();
                     Object[] objectFinalArray;
-                    if(paras!=null) {
-                        for (int k = 0; k < paras.size(); k++) {
-                            paraInfo para = paras.get(k);
-                            Class tmpClass;
-                            if (para.getParaType().contains("[ ]")) {
-                                tmpClass = getClassFromName(para.getParaType().split("\\[")[0] + "[ ]");
-                            } else {
-                                tmpClass = getClassFromName(para.getParaType());
-                            }
-                            curInputClasses.add(tmpClass);
-                            Object tmpObj = null;
-                            if (para.getOriType() == 2) {
-                                Object tmptmpObj;
-                                if(judgeBasicTypeByName(tmpClass)){
-                                    tmpObj = getObjectFromStringAndClass(tmpClass, para.getInputContent().substring(1,para.getInputContent().length()-1));
-                                }
-                                //TODO
-//                                else{
-//                                    JSONObject tmpStr = (JSONObject)jsonArray.get(0);
-//                                    tmptmpObj = (Object)JSONObject.toBean(tmpStr, tmpClass);
-//                                }
-                            } else if(para.getOriType() == 1){
-                                tmpObj = integerObjectHashMap.get(para.getFuncResult());
-                            }
-                            else if(para.getOriType() == 3){
-                                tmpObj = getObjectFromStringAndClass(tmpClass, request.getParameter(para.getInputPara()));
-                            }
-                            objectArray.add(tmpObj);
+                if(paras!=null) {
+                    for (int k = 0; k < paras.size(); k++) {
+                        paraInfo para = paras.get(k);
+                        Class tmpClass;
+                        if (para.getParaType().contains("[]")) {
+                            tmpClass = getClassFromName(para.getParaType().split("\\[")[0] + "[ ]");
+                        } else {
+                            tmpClass = getClassFromName(para.getParaType());
                         }
-                    }
+                        curInputClasses.add(tmpClass);
+                        Object tmpObj = null;
+                        if (para.getOriType() == 2) {
+                            if(judgeBasicTypeByName(tmpClass)){
+                                tmpObj = getObjectFromStringAndClass(tmpClass, para.getInputContent().substring(1,para.getInputContent().length()-1));
+                            }
+                            else{
+                                JSONObject tmpStr = JSONObject.fromObject(para.getInputContent().substring(1,para.getInputContent().length()-1));
+                                tmpObj = (Object)JSONObject.toBean(tmpStr, tmpClass);
+                            }
+                        } else if(para.getOriType() == 1){
+                            tmpObj = integerObjectHashMap.get(para.getFuncResult());
+                        }
+                        else if(para.getOriType() == 3){
+                            tmpObj = Integer.parseInt(request.getParameter(para.getInputPara()));
+                        }
 
+                        objectArray.add(tmpObj);
+                    }
+                }
                     objectFinalArray = (Object[]) objectArray.toArray();
                     Class[] classArray = (Class[]) curInputClasses.toArray(new Class[curInputClasses.size()]);
-
-
                     Object resultText = null;
                     try {
                         resultText = execute(className,
@@ -105,7 +103,8 @@ public class dataSourceController {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    if (resultText != null) {
+                    integerObjectHashMap.put(i+1,resultText);
+                    if (resultText != null && i == functionLogics.size() - 1) {
                             JSONObject json = new JSONObject();
                             Collection collection = setItems(resultText);
                             if(collection!=null){
@@ -141,7 +140,7 @@ public class dataSourceController {
                     for (int k = 0; k < paras.size(); k++) {
                         paraInfo para = paras.get(k);
                         Class tmpClass;
-                        if (para.getParaType().contains("[ ]")) {
+                        if (para.getParaType().contains("[]")) {
                             tmpClass = getClassFromName(para.getParaType().split("\\[")[0] + "[ ]");
                         } else {
                             tmpClass = getClassFromName(para.getParaType());
@@ -149,28 +148,26 @@ public class dataSourceController {
                         curInputClasses.add(tmpClass);
                         Object tmpObj = null;
                         if (para.getOriType() == 2) {
-                            Object tmptmpObj;
                             if(judgeBasicTypeByName(tmpClass)){
                                 tmpObj = getObjectFromStringAndClass(tmpClass, para.getInputContent().substring(1,para.getInputContent().length()-1));
                             }
-//                                else{
-//                                    JSONObject tmpStr = (JSONObject)jsonArray.get(0);
-//                                    tmptmpObj = (Object)JSONObject.toBean(tmpStr, tmpClass);
-//                                }
+                            else{
+                                JSONObject tmpStr = JSONObject.fromObject(para.getInputContent().substring(1,para.getInputContent().length()-1));
+                                tmpObj = (Object)JSONObject.toBean(tmpStr, tmpClass);
+                            }
                         } else if(para.getOriType() == 1){
                             tmpObj = integerObjectHashMap.get(para.getFuncResult());
                         }
                         else if(para.getOriType() == 3){
-                            tmpObj = getObjectFromStringAndClass(tmpClass, request.getParameter(para.getInputPara()));
+                            tmpObj = Integer.parseInt(request.getParameter(para.getInputPara()));
                         }
+
                         objectArray.add(tmpObj);
                     }
                 }
 
                 objectFinalArray = (Object[]) objectArray.toArray();
                 Class[] classArray = (Class[]) curInputClasses.toArray(new Class[curInputClasses.size()]);
-
-
                 Object resultText = null;
                 try {
                     resultText = execute(className,
@@ -178,7 +175,8 @@ public class dataSourceController {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (resultText != null) {
+                integerObjectHashMap.put(i+1,resultText);
+                if (resultText != null && i == functionLogics.size() - 1) {
                     Collection collection = setItems(resultText);
                     JSONArray jsonArray = new JSONArray();
                     if (collection != null) {
@@ -198,13 +196,19 @@ public class dataSourceController {
 
                                     for (int m = 0; m < tmp.size(); m++) {
                                         Object value = tmp.get(m);
-                                        if (judgeBasicType(value)) {
-                                            //result.appendText(value.toString()+" ");
-                                            jsonArray1.put(columnname[m],value.toString());
-                                        } else {
-                                            //result.appendText(ReflectionToStringBuilder.toString(value)+" ");
-                                            jsonArray1.put(columnname[m],ReflectionToStringBuilder.toString(value));
+                                        if(value == null){
+                                            jsonArray1.put(m,"");
                                         }
+                                        else{
+                                            if (judgeBasicType(value)) {
+                                                //result.appendText(value.toString()+" ");
+                                                jsonArray1.put(m,value.toString());
+                                            } else {
+                                                //result.appendText(ReflectionToStringBuilder.toString(value)+" ");
+                                                jsonArray1.put(m,ReflectionToStringBuilder.toString(value));
+                                            }
+                                        }
+
                                     }
 
 
@@ -227,9 +231,48 @@ public class dataSourceController {
                             if (judgeBasicType(resultText)) {
                                 //result.appendText(resultText.toString()+" ");
                                 jsonArray.add(resultText.toString());
-                            } else {
+                            }
+                            else {
+
+                                if(functionLogics.get(i).getResulttype().equals("java.sql.ResultSet")){
+                                    ResultSet tmp = (ResultSet)resultText;
+                                    try {
+                                        List list = new ArrayList();
+                                        ResultSetMetaData md = tmp.getMetaData();
+                                        int columnCount = md.getColumnCount();
+                                        while (tmp.next()) {
+                                            JSONObject jsonArray1 = new JSONObject();
+                                            for (int n = 1; n <= columnCount; n++) {
+                                                String key = md.getColumnName(n);
+                                                String value;
+                                                if(tmp.getObject(n)!=null){
+                                                    value = tmp.getObject(n).toString();
+                                                }else {
+                                                    value = "";
+                                                }
+                                                jsonArray1.put(key, value);//获取键名及值
+                                            }
+                                        jsonArray.add(jsonArray1);
+                                        }
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
+
+//                    rs.beforeFirst();
+//                    String data[][] = new String[row][col];
+//                    //取结果集中的数据, 放在data数组中
+//                    for (int i = 0; i < row; i++) {
+//                        rs.next();
+//                        for (int j = 0; j < col; j++) {
+//                            data[i][j] = rs.getString (j + 1);
+//                            //System.out.println (data[i][j]);
+//                        }
+//                    }//End for
+                                }else{
+                                    jsonArray.add(ReflectionToStringBuilder.toString(resultText));
+                                }
                                 //result.appendText(ReflectionToStringBuilder.toString(resultText)+" ");
-                                jsonArray.add(ReflectionToStringBuilder.toString(resultText));
+
                             }
 
                             //result.appendText("\n");
@@ -263,7 +306,7 @@ public class dataSourceController {
                     for (int k = 0; k < paras.size(); k++) {
                         paraInfo para = paras.get(k);
                         Class tmpClass;
-                        if (para.getParaType().contains("[ ]")) {
+                        if (para.getParaType().contains("[]")) {
                             tmpClass = getClassFromName(para.getParaType().split("\\[")[0] + "[ ]");
                         } else {
                             tmpClass = getClassFromName(para.getParaType());
@@ -271,23 +314,20 @@ public class dataSourceController {
                         curInputClasses.add(tmpClass);
                         Object tmpObj = null;
                         if (para.getOriType() == 2) {
-                            Object tmptmpObj;
                             if(judgeBasicTypeByName(tmpClass)){
                                 tmpObj = getObjectFromStringAndClass(tmpClass, para.getInputContent().substring(1,para.getInputContent().length()-1));
                             }
-//                                else{
-//                                    JSONObject tmpStr = (JSONObject)jsonArray.get(0);
-//                                    tmptmpObj = (Object)JSONObject.toBean(tmpStr, tmpClass);
-//                                }
+                            else{
+                                JSONObject tmpStr = JSONObject.fromObject(para.getInputContent().substring(1,para.getInputContent().length()-1));
+                                tmpObj = (Object)JSONObject.toBean(tmpStr, tmpClass);
+                            }
                         } else if(para.getOriType() == 1){
                             tmpObj = integerObjectHashMap.get(para.getFuncResult());
                         }
                         else if(para.getOriType() == 3){
-                            tmpObj = getObjectFromStringAndClass(tmpClass, request.getParameter(para.getInputPara()));
+                            tmpObj = Integer.parseInt(request.getParameter(para.getInputPara()));
                         }
-//                        else if(para.getOriType() == 3){
-//                            tmpObj = Integer.parseInt(request.getParameter("PageNum"));
-//                        }
+
                         objectArray.add(tmpObj);
                     }
                 }
@@ -303,7 +343,8 @@ public class dataSourceController {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (resultText != null) {
+                integerObjectHashMap.put(i+1,resultText);
+                if (resultText != null && i == functionLogics.size() - 1) {
                     Collection collection = setItems(resultText);
                     JSONArray jsonArray = new JSONArray();
                     if (collection != null) {
@@ -323,16 +364,19 @@ public class dataSourceController {
 
                                 for (int m = 0; m < tmp.size(); m++) {
                                     Object value = tmp.get(m);
-                                    if (judgeBasicType(value)) {
-                                        //result.appendText(value.toString()+" ");
-                                        jsonArray1.put(columnname[m],value.toString());
-                                    } else {
-                                        //result.appendText(ReflectionToStringBuilder.toString(value)+" ");
-                                        jsonArray1.put(columnname[m],ReflectionToStringBuilder.toString(value));
+                                    if(value == null){
+                                        jsonArray1.put(m,"");
+                                    }
+                                    else{
+                                        if (judgeBasicType(value)) {
+                                            //result.appendText(value.toString()+" ");
+                                            jsonArray1.put(m,value.toString());
+                                        } else {
+                                            //result.appendText(ReflectionToStringBuilder.toString(value)+" ");
+                                            jsonArray1.put(m,ReflectionToStringBuilder.toString(value));
+                                        }
                                     }
                                 }
-
-
                             }
                             else {
                                 if (judgeBasicType(obj)) {
@@ -346,7 +390,6 @@ public class dataSourceController {
                             }
                             jsonArray.add(jsonArray1);
                         }
-
                     }
                     else {
                         if (judgeBasicType(resultText)) {
@@ -356,11 +399,8 @@ public class dataSourceController {
                             //result.appendText(ReflectionToStringBuilder.toString(resultText)+" ");
                             jsonArray.add(ReflectionToStringBuilder.toString(resultText));
                         }
-
                         //result.appendText("\n");
                     }
-
-
                     JSONObject result = new JSONObject();
                     result.put("result",jsonArray);
                     result.put("code","0000");
@@ -368,11 +408,7 @@ public class dataSourceController {
                     return result;
                 }
             }
-
-
-
         }
-
         return ds;
     }
 

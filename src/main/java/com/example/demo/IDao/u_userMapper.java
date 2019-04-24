@@ -19,4 +19,6 @@ public interface u_userMapper {
     int updateByPrimaryKey(u_user record);
 
     List<u_user> selectByMap(Map<String, Object> map);
+
+    List<u_user> getAll();
 }

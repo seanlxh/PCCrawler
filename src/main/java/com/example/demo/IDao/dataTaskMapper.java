@@ -28,4 +28,8 @@ public interface dataTaskMapper {
 
     int updateAllStateByPrimaryKey(Long threadId);
 
+    List<dataTask> selectByName(String name);
+
+    List<dataTask> findByDsId(Long id);
+
 }

@@ -31,7 +31,7 @@ public class resultColumnImpl implements BaseService<resultColumn>{
 
     @Override
     public resultColumn findById(Long id) {
-        return null;
+        return resultColumnDao.selectByPrimaryKey(id);
     }
 
     @Override

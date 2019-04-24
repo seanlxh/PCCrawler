@@ -1,0 +1,8 @@
+.container .detail-right .detail-api .api-list li .api-body{
+    padding: 0;
+    border: none;
+}
+.api-chart{
+    width: 830px;
+    height: 400px;
+}

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>API平台</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link  href="/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+	<link  href="/css/monui.css" type="text/css" rel="stylesheet" />
+	<link  href="/css/common3.css" type="text/css" rel="stylesheet" />
+	<link  href="/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" />
+	<link  href="/css/common1.css" type="text/css" rel="stylesheet" />
+	<link  href="/css/commonList.css" type="text/css" rel="stylesheet" />
+	<link  href="/css/iconfont1.css" type="text/css" rel="stylesheet" />
+	<link  href="/css/iconfont2.css" type="text/css" rel="stylesheet" />
+	<link  href="/css/iconfont3.css" type="text/css" rel="stylesheet" />
+	<link  href="/css/iconfont4.css" type="text/css" rel="stylesheet" />
+	<link  href="/css/easydialog.css" type="text/css" rel="stylesheet" />
+	<!--<link  href="/css/bootstrap.css" type="text/css" rel="stylesheet" />-->
+	<link  href="/css/common2.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/form.js"></script>
+	<script type="text/javascript" src="/js/common1.js"></script>
+	<script type="text/javascript" src="/js/dialog2.js"></script>
+	<script type="text/javascript" src="/js/jquery.pagination.js"></script>
+	<script type="text/javascript" src="/js/jquery.dcjqaccordion.2.7.js"></script>
+	<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="/js/dmp-datatable.js"></script>
+	<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/js/messages_cn.js"></script>
+	<script type="text/javascript" src="/js/common2.js"></script>
+	<script type="text/javascript" src="/js/jquery.form.js"></script>
+	<script type="text/javascript" src="/js/highcharts.js"></script>
+	<script type="text/javascript" src="/js/template1.js"></script>
+	<script type="text/javascript" src="/js/template2.js"></script>
+	<script type="text/javascript" src="/js/loginDialog.js"></script>
+	<script type="text/javascript" src="/js/md5.js"></script>
+	<script type="text/javascript" src="/js/detectBrowser.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.vticker-min.js"></script>
+	<script type="text/javascript" src="/js/easydialog.min.js"></script>
+	<script type="text/javascript" src="/js/tags-ball.js"></script>
+	<script type="text/javascript" src="/js/jquery.pagination.js"></script>
+	<script type="text/javascript" src="/js/apiIndex.js"></script>
+	<script type="text/javascript" src="/js/list.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.js"></script>
+</head><!-- 公用样式表 -->
+<!-- 公用js -->
+<!-- 公用样式表 -->
+<!-- 公用js -->
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+<!--[if lt IE 9]>
+	<script src="/js/html5shiv.js"></script>
+	<script src="/js/respond.min.js"></script>
+<![endif]-->
+
+<body>
+		<link rel="stylesheet" type="text/css" href="/css/header.css" />
+<script src="/js/dialog1.js"></script>
+<style>
+.modal {
+ z-index: 10001;
+}
+.modal-backdrop ~ .modal-dialog{
+z-index: 1041;
+}
+</style>
+		<style>
+			.m-ft{
+				height: auto;
+				padding: 20px 0;
+			}
+			.m-ft .link-list {
+				margin-bottom: 15px;
+			}
+			.m-ft .link-list > ul > li a{
+				font-size: 16px;
+			}
+			.m-ft p{
+				margin: 10px 0 5px;
+				font-size: 14px;
+			}
+			.m-ft a{
+				font-size: 14px;
+			}
+		</style>
+
+
+<!--<input type="hidden" id="logoutUrl" value="http://data.sd.gov.cn/odweb/uc/index/Index.do?method=logoutAll"/>-->
+<!--<input type="hidden" id="dataUrl" value="http://data.sd.gov.cn/odweb"/>-->
+<!--<input type="hidden" id="uc_home_url" value="http://data.sd.gov.cn/odweb"/>-->
+<!--<input type="hidden" id="loginAjax" value="http://data.sd.gov.cn/odweb/uc/login/Login.do?method=login&callbackparam=?"/>-->
+<!--<input type="hidden" id="register_url" value="http://data.sd.gov.cn/odweb/uc/index/signup.htm"/>-->
+
+
+<div class="sy_line"></div>
+
+<!--<div class="m-hd">-->
+    <!--&lt;!&ndash;<div class="g-main">&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;<div class="m-nav-list">&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<ul>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<li id="pIndex"><a href="http://data.sd.gov.cn/odweb/index.htm"><i class="nav-icon icon-index"></i>首页</a></li>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<li id="pCatalog"><a href="http://data.sd.gov.cn/odweb/catalog/index.htm"><i class="nav-icon icon-catalog"></i>数据目录</a></li>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<li id="pApi"><a href="http://data.sd.gov.cn/odweb/dev/developer/serviceList.htm"><i class="nav-icon icon-api"></i>API超市</a></li>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<li id="pApp"><a href="http://data.sd.gov.cn/odweb/appcenter/index.htm"><i class="nav-icon icon-app"></i>应用商店</a></li>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<li id="pMap"><a href="http://data.sd.gov.cn/odweb/map/index.htm"><i class="nav-icon icon-map"></i>地图服务</a></li>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<li id="pDynamic"><a href="http://data.sd.gov.cn/odweb/analyse/index.htm"><i class="nav-icon icon-dynamic"></i>开放指数</a></li>&ndash;&gt;&ndash;&gt;-->
+               <!--&lt;!&ndash;&lt;!&ndash;<li id="pInteract"><a href="http://data.sd.gov.cn/odweb/interact/index.htm"><i class="nav-icon icon-interact"></i>互动交流</a></li>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<li id="pDev"><a href="http://data.sd.gov.cn/odweb/dev/developer/index.htm"><i class="nav-icon icon-developer"></i>开发者中心</a></li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</ul>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<div id="refushhtml" style=""></div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
+<iframe id="jnIframe" style="display: none;"></iframe>
+<iframe id="qdIframe" style="display: none;"></iframe>
+
+
+<style>
+.modal-dialog{
+	z-index: 1051;
+}
+</style>
+
+<div class="main">
+    <div class="g-main">
+
+</div>
+        <div class="container" style="margin-right:0px;">
+            <div class="cata-filter">
+                <div class="filter-selected">
+                    <div class="selected-title">已选：</div>
+                    <div class="selected-empty">清除已选属性</div>
+                    <ul>
+                        <li>
+                            <span class="selected-header">领域</span>:
+                            <span class="selected-body sel-first"></span>
+                            <i class="iconfont">&#xe69e;</i>
+                        </li>
+                        <li>
+                            <span class="selected-header">机构</span>:
+                            <span class="selected-body sel-depart"></span>
+                            <i class="iconfont">&#xe69e;</i>
+                        </li>
+                    </ul>
+                </div>
+                <div class="filter-main">
+                    <div class="filter-header">分类：</div>
+                    <div class="filter-body">
+                        <ul class="filter-list">
+                            <li class="active">推荐</li>
+                            <li>领域</li>
+                            <li>机构</li>
+                        </ul>
+                        <div class="filter-theme-part">
+                            <div class="filter-theme-arrow"></div>
+                            <ul class="theme-first-list">
+                          		<li id="sub-21"><i class="iconfont"><img src="/images/21.png" alt="" /></i><span >企业登记监管</span></li>
+								<li id="sub-20"><i class="iconfont"><img src="/images/20.png" alt="" /></i><span >海洋</span></li>
+								<li id="sub-19"><i class="iconfont"><img src="/images/19.png" alt="" /></i><span >气象</span></li>
+								<li id="sub-18"><i class="iconfont"><img src="/images/18.png" alt="" /></i><span >统计</span></li>
+								<li id="sub-17"><i class="iconfont"><img src="/images/17.png" alt="" /></i><span >质量</span></li>
+								<li id="sub-16"><i class="iconfont"><img src="/images/16.png" alt="" /></i><span >金融</span></li>
+								<li id="sub-15"><i class="iconfont"><img src="/images/15.png" alt="" /></i><span >安全监管</span></li>
+								<li id="sub-13"><i class="iconfont"><img src="/images/13.png" alt="" /></i><span >农业</span></li>
+								<li id="sub-12"><i class="iconfont"><img src="/images/12.png" alt="" /></i><span >生态环境</span></li>
+								<li id="sub-11"><i class="iconfont"><img src="/images/11.png" alt="" /></i><span >资源</span></li>
+								<li id="sub-10"><i class="iconfont"><img src="/images/10.png" alt="" /></i><span >科技</span></li>
+								<li id="sub-9"><i class="iconfont"><img src="/images/9.png" alt="" /></i><span >教育</span></li>
+								<li id="sub-8"><i class="iconfont"><img src="/images/8.png" alt="" /></i><span >文化</span></li>
+								<li id="sub-7"><i class="iconfont"><img src="/images/7.png" alt="" /></i><span >地理</span></li>
+								<li id="sub-6"><i class="iconfont"><img src="/images/6.png" alt="" /></i><span >社会保障</span></li>
+								<li id="sub-5"><i class="iconfont"><img src="/images/5.png" alt="" /></i><span >就业</span></li>
+								<li id="sub-4"><i class="iconfont"><img src="/images/4.png" alt="" /></i><span >卫生</span></li>
+								<li id="sub-3"><i class="iconfont"><img src="/images/3.png" alt="" /></i><span >医疗</span></li>
+								<li id="sub-2"><i class="iconfont"><img src="/images/2.png" alt="" /></i><span >交通运输</span></li>
+								<li id="sub-1"><i class="iconfont"><img src="/images/1.png" alt="" /></i><span >信用</span></li>
+								</ul>
+                        </div>
+                        <div class="filter-depart-part">
+                            <div class="filter-depart-arrow"></div>
+                            <div class="depart-list">
+                                <div class="depart-first">A-G</div>
+                                <ul class="depart-main" id="A-G">
+
+                                </ul>
+                                <div class="depart-first">H-N</div>
+                                <ul class="depart-main" id="H-N">
+
+                                </ul>
+                                <div class="depart-first">O-T</div>
+                                <ul class="depart-main" id="O-T">
+
+                                </ul>
+                                <div class="depart-first">U-Z</div>
+                                <ul class="depart-main" id="U-Z">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="subjectId"/>
+            <input type="hidden" id="orgId"/>
+            <input type="hidden" id="orderType"/>
+            <input type="hidden" id="odWebUrl" value="http://data.sd.gov.cn/odweb"/>
+            <div class="cata-sort">
+                <div class="sort-sum" id="record_count">共1024个API</div>
+                <div class="sort-list">
+                    <ul>
+                        <li class="active" id = "service_id desc">综合排序<i class="iconfont icon-xiangxiapaixujiantou"></i></li>
+                        <li id="online_time desc">更新时间<i class="iconfont icon-xiangxiapaixujiantou"></i></li>
+                        <li id="app_count desc">应用连接数<i class="iconfont icon-xiangxiapaixujiantou"></i></li>
+                    </ul>
+                </div>
+                <div class="sort-demand">
+                    <input type="text" class="m-input" id="key" placeholder="在结果中搜索"/>
+                    <i id="keySearch" class="iconfont">&#xe680;</i>
+                </div>
+            </div>
+            <div class="cata-main" id="cata-main">
+                <div class="cata-list">
+					<ul id="apiList">
+                      
+                    </ul>
+                    <div class="m-page pg-info pg-sm pagination" id="Pagination">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+		<div class="modal fade" id="jsonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">json数据</h4>
+					</div>
+					<div class="modal-body">
+						<div id="json-result">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<div class="m-ft">
+<div class="g-main">
+    </div>
+			<p>联系电话：13269696615</p>
+	      <a href="http://www.miitbeian.gov.cn/" target="_blank">鲁ICP备05051451号</a>
+</div>
+</body>
+</html>
