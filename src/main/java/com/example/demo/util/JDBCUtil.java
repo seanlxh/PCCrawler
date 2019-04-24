@@ -3,10 +3,7 @@ package com.example.demo.util;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +33,7 @@ public class JDBCUtil {
             e.printStackTrace();
         }
     }
+
     public Boolean insertTable(String tableName, ArrayList<ArrayList<String>> list){
         try {
             for (int j = 0 ; j < list.size() ; j ++){
@@ -64,12 +62,10 @@ public class JDBCUtil {
                     stmt.clearBatch();
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return true;
-
     }
 
     public Boolean createTable(Map<String,Object> map){
@@ -95,6 +91,34 @@ public class JDBCUtil {
 
         return true;
     }
+
+
+    public Boolean insertData(String tableName, String data){
+        try {
+            boolean flag = false;
+            DatabaseMetaData meta = conn.getMetaData();
+            String type [] = {"TABLE"};
+            ResultSet rs = meta.getTables(null, null, tableName, type);
+            flag = rs.next();
+            if(!flag){
+                String sql = "CREATE TABLE "+tableName +
+                        " (data VARCHAR(65535))";
+
+                stmt.executeUpdate(sql);
+            }
+            String sql = "INSERT INTO t"+tableName+" VALUES("+ data+ ")";
+                    stmt.addBatch(sql);
+                    int[] updateCounts = stmt.executeBatch();
+                    conn.commit();
+                    stmt.clearBatch();
+
+            } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return true;
+    }
+
 
     public boolean Close(){
         try {

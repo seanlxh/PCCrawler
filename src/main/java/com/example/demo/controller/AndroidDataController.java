@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.util.JDBCUtil;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -40,7 +44,7 @@ public class AndroidDataController {
     }
 
     @RequestMapping(value="test",method= RequestMethod.POST)
-    public String csvjarfileUpload(HttpServletRequest request){
+    public String getdata(HttpServletRequest request){
         InputStream reader = null;
         try {
             reader = request.getInputStream();
@@ -50,6 +54,12 @@ public class AndroidDataController {
         String result = new BufferedReader(new InputStreamReader(reader))
                 .lines().parallel().collect(Collectors.joining(System.lineSeparator()));
         result = unicodeToString(result);
+
+
+        Map<String,Object> map = new HashMap<String, Object>();
+        String tablename = request.getParameter("tablename");
+        JDBCUtil jdbcUtil = new JDBCUtil();
+        jdbcUtil.insertData(tablename,result);
         System.out.println(result);
         return result;
     }
