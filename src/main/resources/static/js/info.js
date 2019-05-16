@@ -187,6 +187,38 @@ function show(obj){
 }
 
 
+
+
+function loadXMLDocAd(id)
+{
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+    {
+        // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {
+        // IE6, IE5 浏览器执行代码
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            var obj = xmlhttp.responseText;
+            $("#json-result").html(obj);
+        }
+    }
+    var url='/Android/executeAndroid?path='+document.getElementById("Adurl").value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.send();
+}
+
+
+
+
+
 function loadXMLDoc(id)
 {
     var xmlhttp;
@@ -302,6 +334,18 @@ function execute1(id){
         $("#json-result").html(content);
 }
 
+function executeAd(id){
+    $("#json-result").html('检索中');
+    while(cars.length!=0){
+        cars.pop();
+    }
+    var content =  '';
+    content += ("<br>请求地址</br>");
+    content += ('<input type="text" name="Adurl" id="Adurl" class="form-control" style="width: 280px;" placeholder=""/>');
+    content += '<button type="button" class="btn btn-primary" onClick="loadXMLDocAd('+id+')">调用</button>';
+    $("#json-result").html(content);
+
+}
 
 function execute(id){
     $("#json-result").html('检索中');
@@ -453,7 +497,6 @@ $.getJSON('/getNetDataSource',function(ret){
 
 
 
-
 $.getJSON('/DataSource/showDataSource',function(ret){
     var template = "<table id=\"dsTable\" class=\"table table-striped table-bordered\" border=1>";
     template +=  "<tr class=\"success\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
@@ -498,6 +541,22 @@ $.getJSON('/DataSource/showDataSource',function(ret){
     template += "</table>";
     document.getElementById("peizhi").innerHTML=template ;
     displaypz();
+})
+
+
+$.getJSON('/Android/showDataSource',function(ret){
+    var template = "<table id=\"dsTableAd\" class=\"table table-striped table-bordered\" border=1>";
+    template +=  "<tr class=\"success\"><td>数据源ID</td><td>数据源名称</td><td>操作</td></tr>";
+    for (var i=0; i<ret.length; i++){
+        template += ("<tr>");
+        template += ("<td>"+ ret[i].id +"</td>");
+        template += ("<td>"+ ret[i].name +"</td>");
+        template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="getpara('+ret[i].dsId+')">预览</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="executeAd('+ret[i].dsId+')">调用</button></td>';
+        template += ("</tr>");
+    }
+    template += "</table>";
+    document.getElementById("envtestad").innerHTML=template ;
+    displayad();
 })
 
 
@@ -546,6 +605,18 @@ function display1() {
     document.getElementById("sjzl1").innerHTML = "数据总量 " + len1 + "";
     document.getElementById("pageSize1").value = pageSize1;
 }
+
+function displayad() {
+    lenrt = $("#dsTableAd tr").length - 1;
+    pagert = lenrt % pageSizert == 0 ? lenrt / pageSizert : Math.floor(lenrt / pageSizert) + 1;
+    curPagert = 1;
+    displayPagert(1);
+
+    document.getElementById("btnad0").innerHTML = "当前 " + curPagert + "/" + pagert + " 页    每页 ";
+    document.getElementById("sjzlad").innerHTML = "数据总量 " + lenrt + "";
+    document.getElementById("pageSizead").value = pageSizert;
+}
+
 function displayrt() {
     lenrt = $("#dsTablert tr").length - 1;
     pagert = lenrt % pageSizert == 0 ? lenrt / pageSizert : Math.floor(lenrt / pageSizert) + 1;
