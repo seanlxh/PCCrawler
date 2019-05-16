@@ -14,6 +14,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +48,7 @@ public class AndroidDataController {
         String path = request.getParameter("path");
         String msg = sendGet(path);
         Map<String,String> res = new HashMap<>();
-        res.put("msg",msg);
+        res.put("msg","success");
         return res;
     }
 
@@ -81,8 +82,8 @@ public class AndroidDataController {
 
     }
 
-
-    public static String sendGet(String url) {
+    @Async
+    public String sendGet(String url) {
         //1.获得一个httpclient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();
         //2.生成一个get请求

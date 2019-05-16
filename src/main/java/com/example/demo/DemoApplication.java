@@ -15,6 +15,7 @@ import org.springframework.web.WebApplicationInitializer;
 @SpringBootApplication
 @MapperScan("com.example.demo.IDao")
 @ServletComponentScan
+@EnableAsync
 //public class DemoApplication{
 //
 //
