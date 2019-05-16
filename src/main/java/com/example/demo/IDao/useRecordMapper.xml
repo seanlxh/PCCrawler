@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.IDao.useRecordMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.useRecord">
+    <id column="use_Id" jdbcType="BIGINT" property="useId" />
+    <result column="use_Time" jdbcType="TIMESTAMP" property="useTime" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="user_Name" jdbcType="VARCHAR" property="userName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    use_Id, use_Time, type, user_Name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from useRecord
+    where use_Id = #{useId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByTime" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from useRecord
+    where use_Time &gt;= #{startTime,jdbcType=TIMESTAMP}
+    AND use_Time &lt; #{endTime,jdbcType=TIMESTAMP}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from useRecord
+    where use_Id = #{useId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.entity.useRecord">
+    insert into useRecord (use_Id, use_Time, type,
+      user_Name)
+    values (#{useId,jdbcType=BIGINT}, #{useTime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER},
+      #{userName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.entity.useRecord">
+    insert into useRecord
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="useId != null">
+        use_Id,
+      </if>
+      <if test="useTime != null">
+        use_Time,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="userName != null">
+        user_Name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="useId != null">
+        #{useId,jdbcType=BIGINT},
+      </if>
+      <if test="useTime != null">
+        #{useTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.useRecord">
+    update useRecord
+    <set>
+      <if test="useTime != null">
+        use_Time = #{useTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        user_Name = #{userName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where use_Id = #{useId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.useRecord">
+    update useRecord
+    set use_Time = #{useTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=INTEGER},
+      user_Name = #{userName,jdbcType=VARCHAR}
+    where use_Id = #{useId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.IDao.AndroidDataSourceMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.AndroidDataSource" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="appPackage" property="apppackage" jdbcType="VARCHAR" />
+    <result column="appActivity" property="appactivity" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, appPackage, appActivity
+  </sql>
+
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    *
+    from AndroidDatasource
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from AndroidDatasource
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from AndroidDatasource
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.entity.AndroidDataSource" >
+    insert into AndroidDatasource (id, name, appPackage, 
+      appActivity)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{apppackage,jdbcType=VARCHAR}, 
+      #{appactivity,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.entity.AndroidDataSource" >
+    insert into AndroidDatasource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="apppackage != null" >
+        appPackage,
+      </if>
+      <if test="appactivity != null" >
+        appActivity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="apppackage != null" >
+        #{apppackage,jdbcType=VARCHAR},
+      </if>
+      <if test="appactivity != null" >
+        #{appactivity,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.AndroidDataSource" >
+    update AndroidDatasource
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="apppackage != null" >
+        appPackage = #{apppackage,jdbcType=VARCHAR},
+      </if>
+      <if test="appactivity != null" >
+        appActivity = #{appactivity,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.AndroidDataSource" >
+    update AndroidDatasource
+    set name = #{name,jdbcType=VARCHAR},
+      appPackage = #{apppackage,jdbcType=VARCHAR},
+      appActivity = #{appactivity,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

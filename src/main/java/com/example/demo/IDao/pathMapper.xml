@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.IDao.pathMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.path">
+    <id column="language_name" jdbcType="VARCHAR" property="languageName" />
+    <result column="libPath" jdbcType="VARCHAR" property="libpath" />
+    <result column="csvPath" jdbcType="VARCHAR" property="csvpath" />
+    <result column="hadoopPath" jdbcType="VARCHAR" property="hadooppath" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    language_name, libPath, csvPath, hadoopPath
+  </sql>
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    *
+    from path
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from path
+    where language_name = #{languageName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from path
+    where language_name = #{languageName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.entity.path">
+    insert into path (language_name, libPath, csvPath, 
+      hadoopPath)
+    values (#{languageName,jdbcType=VARCHAR}, #{libpath,jdbcType=VARCHAR}, #{csvpath,jdbcType=VARCHAR}, 
+      #{hadooppath,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.entity.path">
+    insert into path
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="languageName != null">
+        language_name,
+      </if>
+      <if test="libpath != null">
+        libPath,
+      </if>
+      <if test="csvpath != null">
+        csvPath,
+      </if>
+      <if test="hadooppath != null">
+        hadoopPath,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="languageName != null">
+        #{languageName,jdbcType=VARCHAR},
+      </if>
+      <if test="libpath != null">
+        #{libpath,jdbcType=VARCHAR},
+      </if>
+      <if test="csvpath != null">
+        #{csvpath,jdbcType=VARCHAR},
+      </if>
+      <if test="hadooppath != null">
+        #{hadooppath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.path">
+    update path
+    <set>
+      <if test="libpath != null">
+        libPath = #{libpath,jdbcType=VARCHAR},
+      </if>
+      <if test="csvpath != null">
+        csvPath = #{csvpath,jdbcType=VARCHAR},
+      </if>
+      <if test="hadooppath != null">
+        hadoopPath = #{hadooppath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where language_name = #{languageName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.path">
+    update path
+    set libPath = #{libpath,jdbcType=VARCHAR},
+      csvPath = #{csvpath,jdbcType=VARCHAR},
+      hadoopPath = #{hadooppath,jdbcType=VARCHAR}
+    where language_name = #{languageName,jdbcType=VARCHAR}
+  </update>
+</mapper>

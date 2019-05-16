@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.IDao.file_addrMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.file_addr" >
+    <id column="ds_id" property="dsId" jdbcType="BIGINT" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="port" property="port" jdbcType="INTEGER" />
+    <result column="postfix" property="postfix" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="passport" property="passport" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ds_id, path, port, postfix, account, passport
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from file_addr
+    where ds_id = #{dsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from file_addr
+    where ds_id = #{dsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.entity.file_addr" >
+    insert into file_addr (ds_id, path, port, 
+      postfix, account, passport
+      )
+    values (#{dsId,jdbcType=BIGINT}, #{path,jdbcType=VARCHAR}, #{port,jdbcType=INTEGER}, 
+      #{postfix,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{passport,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.entity.file_addr" >
+    insert into file_addr
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dsId != null" >
+        ds_id,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="port != null" >
+        port,
+      </if>
+      <if test="postfix != null" >
+        postfix,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="passport != null" >
+        passport,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dsId != null" >
+        #{dsId,jdbcType=BIGINT},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        #{port,jdbcType=INTEGER},
+      </if>
+      <if test="postfix != null" >
+        #{postfix,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="passport != null" >
+        #{passport,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.file_addr" >
+    update file_addr
+    <set >
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        port = #{port,jdbcType=INTEGER},
+      </if>
+      <if test="postfix != null" >
+        postfix = #{postfix,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="passport != null" >
+        passport = #{passport,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ds_id = #{dsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.file_addr" >
+    update file_addr
+    set path = #{path,jdbcType=VARCHAR},
+      port = #{port,jdbcType=INTEGER},
+      postfix = #{postfix,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      passport = #{passport,jdbcType=VARCHAR}
+    where ds_id = #{dsId,jdbcType=BIGINT}
+  </update>
+</mapper>
