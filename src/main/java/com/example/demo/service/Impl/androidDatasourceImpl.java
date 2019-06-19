@@ -18,7 +18,7 @@ public class androidDatasourceImpl implements BaseService<AndroidDataSource> {
 
     @Override
     public void save(AndroidDataSource entity) {
-
+        dataSourceDao.insert(entity);
     }
 
     @Override

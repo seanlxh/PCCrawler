@@ -20,6 +20,10 @@ public class indexController {
     public String toIndex(HttpServletRequest request, Model model){
         return "ltpt";
     }
+    @RequestMapping("/android")
+    public String android(HttpServletRequest request, Model model){
+        return "android";
+    }
     @RequestMapping("/userIndex")
     public String userIndex(HttpServletRequest request, Model model){
         return "userltpt";

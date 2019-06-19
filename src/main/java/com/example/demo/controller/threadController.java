@@ -567,7 +567,6 @@ public class threadController {
         JSONObject result = new JSONObject();
         result.put("code","0000");
         result.put("msg","服务调用成功");
-
         return result;
     }
 

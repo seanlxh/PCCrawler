@@ -1,8 +1,5 @@
 package com.example.demo.controller;
-import com.example.demo.entity.dataSource;
-import com.example.demo.entity.functionLogic;
-import com.example.demo.entity.paraInfo;
-import com.example.demo.entity.resultColumn;
+import com.example.demo.entity.*;
 import com.example.demo.service.Impl.*;
 import com.example.demo.util.jsonUtil;
 import net.sf.json.JSONArray;
@@ -31,6 +28,8 @@ public class FileUploadController {
     private paraInfoImpl paraInfoService;
     @Resource
     private pathImpl pathService;
+    @Resource
+    private androidDatasourceImpl androidDataService;
     /*
      * 获取file.html页面
      */
@@ -131,6 +130,8 @@ public class FileUploadController {
             e.printStackTrace();
         }
         int type = Integer.valueOf(request.getParameter("type"));
+        int ptype = Integer.valueOf(request.getParameter("ptype"));
+        if(ptype == 1){
         dataSource ds = new dataSource(time,name+"(java)",desc,type,time,1);
         dataSourceService.save(ds);
         String columnName = request.getParameter("columnName");
@@ -256,8 +257,19 @@ public class FileUploadController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+            return "success";
+        }
+        else if(ptype == 3){
+            AndroidDataSource entity = new AndroidDataSource();
+            entity.setName(name);
+            entity.setAppactivity("default");
+            entity.setApppackage("default");
+            androidDataService.save(entity);
+            return "success";
 
-
-        return "success";
+        }
+        else{
+            return "success";
+        }
     }
 }
