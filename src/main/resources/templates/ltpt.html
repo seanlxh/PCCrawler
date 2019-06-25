@@ -42,7 +42,7 @@
 <!--            </div>-->
 <!--        </div>&lt;!&ndash; /.container-fluid &ndash;&gt;-->
     </nav>
-        
+
         <link href="/css/font-awesome.min.css" rel="stylesheet"/>
         <script src="/js/jquery.json.js"></script>
         <script src="/js/json2.js"></script>
@@ -51,11 +51,11 @@
         <ul id="myTab" class="nav nav-tabs">
             <li class="active">
                 <a href="#home" data-toggle="tab">
-                    Java数据源查看
+                    java和.Net数据源查看
                 </a>
             </li>
-            <li><a href="#csvhome" data-toggle="tab">.Net数据源查看</a></li>
-            <li><a href="#androidhome" data-toggle="tab">安卓数据源查看</a></li>
+<!--            <li><a href="#androidhome" data-toggle="tab">安卓数据源查看</a></li>-->
+            <li><a href="#csvhome" data-toggle="tab">C++桌面数据源查看</a></li>
             <li><a href="#realtime" data-toggle="tab">数据采集任务</a></li>
             <li><a href="#shuju" data-toggle="tab">数据源配置</a></li>
 <!--            <div class="col-md-offset-4">-->
@@ -67,7 +67,7 @@
             <div class="tab-pane fade in active" id="home">
                 <div class="row">
                 </div><!--/.row-->
-
+                <div id="envtest"></div>
                 <a id="btn0"></a>
                 <input id="pageSize" type="text" size="1" maxlength="2" value="getDefaultValue()"/><a> 条 </a> <a href="#" id="pageSizeSet">设置</a>&nbsp;
                 <a id="sjzl"></a>&nbsp;
@@ -79,7 +79,7 @@
                 <input id="changePage" type="text" size="1" maxlength="4"/>
                 <a>页&nbsp;</a>
                 <a  href="#" id="btn5">跳转</a>
-     <div id="envtest"></div>
+
 
 
     </div><!--/.home-->
@@ -88,7 +88,7 @@
             <div class="tab-pane fade" id="csvhome">
                 <div class="row">
                 </div><!--/.row-->
-
+                <div id="envtest1"></div>
                 <a id="btn01"></a>
                 <input id="pageSize1" type="text" size="1" maxlength="2" value="getDefaultValue1()"/><a> 条 </a> <a href="#" id="pageSizeSet1">设置</a>&nbsp;
                 <a id="sjzl1"></a>&nbsp;
@@ -100,13 +100,14 @@
                 <input id="changePage1" type="text" size="1" maxlength="4"/>
                 <a>页&nbsp;</a>
                 <a  href="#" id="btn51">跳转</a>
-                <div id="envtest1"></div>
+
             </div><!--/.home-->
 
 
             <div class="tab-pane fade" id="androidhome">
                 <div class="row">
                 </div><!--/.row-->
+                <div id="envtestad"></div>
                 <a id="btnad0"></a>
                 <input id="pageSizead" type="text" size="1" maxlength="2" value="getDefaultValue1()"/><a> 条 </a> <a href="#" id="pageSizeSetad">设置</a>&nbsp;
                 <a id="sjzlad"></a>&nbsp;
@@ -118,7 +119,7 @@
                 <input id="changePagead" type="text" size="1" maxlength="4"/>
                 <a>页&nbsp;</a>
                 <a  href="#" id="btnad5">跳转</a>
-                <div id="envtestad"></div>
+
             </div><!--/.home-->
 
 
@@ -127,6 +128,7 @@
 
             <div class="tab-pane fade" id="realtime">
                 <div class="row"> </div>
+                <div id="tabtest"></div>
                 <a id="btn0rt"></a>
                 <input id="pageSizert" type="text" size="1" maxlength="2" value="getDefaultValue()"/><a> 条 </a> <a href="#" id="pageSizeSetrt">设置</a>&nbsp;
                 <a id="sjzlrt"></a>&nbsp;
@@ -138,13 +140,14 @@
                 <input id="changePagert" type="text" size="1" maxlength="4"/>
                 <a>页&nbsp;</a>
                 <a  href="#" id="btn5rt">跳转</a>
-                <div id="tabtest"></div>
+
 
             </div><!--/.realtime-->
 
 
             <div class="tab-pane fade" id="shuju">
                 <div class="row"> </div>
+                <div id="peizhi"></div>
                 <a id="btn0pz"></a>
                 <input id="pageSizepz" type="text" size="1" maxlength="2" value="getDefaultValue()"/><a> 条 </a> <a href="#" id="pageSizeSetpz">设置</a>&nbsp;
                 <a id="sjzlpz"></a>&nbsp;
@@ -157,7 +160,7 @@
                 <a>页&nbsp;</a>
                 <a  href="#" id="btn5pz">跳转</a>
 
-                <div id="peizhi"></div>
+
 
             </div><!--/.shuju-->
 

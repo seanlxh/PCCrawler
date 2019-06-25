@@ -129,7 +129,9 @@ public class FileUploadController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        int type = Integer.valueOf(request.getParameter("type"));
+        int type = 1;
+        if(request.getParameter("type") != null)
+            type = Integer.valueOf(request.getParameter("type"));
         int ptype = Integer.valueOf(request.getParameter("ptype"));
         if(ptype == 1){
         dataSource ds = new dataSource(time,name+"(java)",desc,type,time,1);

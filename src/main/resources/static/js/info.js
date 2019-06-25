@@ -410,7 +410,7 @@ function stopDS(id){
 function refreshTask(){
     $.getJSON('/task/getTask',function(ret){
         var template = "<button type='button' class='btn btn-info' onClick='refreshTask()'>刷新</button><table class=\"table table-striped table-bordered\" border=1>";
-        template +=  "<tr class=\"success\"><td>任务ID</td><td>数据源ID</td><td>状态</td><td>创建人</td><td>创建时间</td><td>操作</td></tr>";
+        template +=  "<tr style=\"background-color:red\"><td>任务ID</td><td>数据源ID</td><td>状态</td><td>创建人</td><td>创建时间</td><td>操作</td></tr>";
         for (var i=0; i<ret.length; i++){
             template += ("<tr>");
             template += ("<td>"+ ret[i].taskID +"</td>");
@@ -476,7 +476,7 @@ function taskInfo(id) {
 
 $.getJSON('/getNetDataSource',function(ret){
     var template = "<table id=\"dsTable1\" class=\"table table-striped table-bordered\" border=1>";
-    template +=  "<tr class=\"success\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
+    template +=  "<tr style=\"background-color:red\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
     for (var i=0; i<ret.length; i++){
         template += ("<tr>");
         template += ("<td>"+ ret[i].dsId +"</td>");
@@ -485,9 +485,9 @@ $.getJSON('/getNetDataSource',function(ret){
         template += ("<td>"+ ret[i].type +"</td>");
         template += ("<td>"+ ret[i].timestamp +"</td>");
         if(ret[i].state == 1)
-            template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="getpara('+ret[i].dsId+')">预览</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="execute1('+ret[i].dsId+')">调用</button></td>';
+            template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="execute1('+ret[i].dsId+')">调用</button></td>';
         else
-            template += '<td><button type="button" disabled="disabled" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="getpara('+ret[i].dsId+')">预览</button>&nbsp&nbsp&nbsp<button type="button" disabled="disabled" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="execute('+ret[i].dsId+')">调用</button></td>';
+            template += '<td><button type="button" disabled="disabled" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="execute('+ret[i].dsId+')">调用</button></td>';
         template += ("</tr>");
     }
     template += "</table>";
@@ -499,7 +499,7 @@ $.getJSON('/getNetDataSource',function(ret){
 
 $.getJSON('/DataSource/showDataSource',function(ret){
     var template = "<table id=\"dsTable\" class=\"table table-striped table-bordered\" border=1>";
-    template +=  "<tr class=\"success\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
+    template +=  "<tr style=\"background-color:red\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
     for (var i=0; i<ret.length; i++){
         template += ("<tr>");
         template += ("<td>"+ ret[i].dsId +"</td>");
@@ -524,7 +524,7 @@ $.getJSON('/getUser',function(ret){
 
 $.getJSON('/DataSource/showDataSource',function(ret){
     var template = "<table id=\"dsTablepz\" class=\"table table-striped table-bordered\" border=1>";
-    template +=  "<tr class=\"success\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
+    template +=  "<tr style=\"background-color:red\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
     for (var i=0; i<ret.length; i++){
         template += ("<tr>");
         template += ("<td>"+ ret[i].dsId +"</td>");
@@ -546,12 +546,12 @@ $.getJSON('/DataSource/showDataSource',function(ret){
 
 $.getJSON('/Android/showDataSource',function(ret){
     var template = "<table id=\"dsTableAd\" class=\"table table-striped table-bordered\" border=1>";
-    template +=  "<tr class=\"success\"><td>数据源ID</td><td>数据源名称</td><td>操作</td></tr>";
+    template +=  "<tr style=\"background-color:red\"><td>数据源ID</td><td>数据源名称</td><td>操作</td></tr>";
     for (var i=0; i<ret.length; i++){
         template += ("<tr>");
         template += ("<td>"+ ret[i].id +"</td>");
         template += ("<td>"+ ret[i].name +"</td>");
-        template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="getpara('+ret[i].dsId+')">预览</button>&nbsp&nbsp&nbsp<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="executeAd('+ret[i].dsId+')">调用</button></td>';
+        template += '<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonModal" onClick="executeAd('+ret[i].dsId+')">调用</button></td>';
         template += ("</tr>");
     }
     template += "</table>";
@@ -562,7 +562,7 @@ $.getJSON('/Android/showDataSource',function(ret){
 
 $.getJSON('/task/getTask',function(ret){
     var template = "<button type='button' class='btn btn-info' onClick='refreshTask()'>刷新</button><table id=\"dsTablert\" class=\"table table-striped table-bordered\" border=1>";
-    template +=  "<tr class=\"success\"><td>任务ID</td><td>数据源ID</td><td>状态</td><td>创建人</td><td>创建时间</td><td>操作</td></tr>";
+    template +=  "<tr style=\"background-color:red\"><td>任务ID</td><td>数据源ID</td><td>状态</td><td>创建人</td><td>创建时间</td><td>操作</td></tr>";
     for (var i=0; i<ret.length; i++){
         template += ("<tr>");
         template += ("<td>"+ ret[i].taskID +"</td>");

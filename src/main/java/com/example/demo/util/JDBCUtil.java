@@ -14,10 +14,10 @@ public class JDBCUtil {
     private Statement stmt;
 
     public JDBCUtil() {
-        String DB_URL = "jdbc:mysql://localhost:3306/APIPlatform?useUnicode=true&characterEncoding=utf-8";
+        String DB_URL = "jdbc:mysql://10.24.11.134:3306/APIPlatform?useUnicode=true&characterEncoding=utf-8";
         String JDBC_DRIVER = "com.mysql.jdbc.Driver";
         String USER = "root";
-        String PASS = "lxh960119";
+        String PASS = "123456";
 //        String DB_URL = "jdbc:oracle:thin:@//10.24.11.181:1621/helowin";
 //        String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
 //        String USER = "SJCJ_FGW";
