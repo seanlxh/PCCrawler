@@ -187,7 +187,31 @@ function show(obj){
 }
 
 
-
+function loadXMLDocNet(id)
+{
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+    {
+        // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {
+        // IE6, IE5 浏览器执行代码
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            var obj = xmlhttp.responseText;
+            $("#json-result").html(obj);
+        }
+    }
+    var url='/Android/executeAndroid?path='+document.getElementById("Neturl").value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.send();
+}
 
 function loadXMLDocAd(id)
 {
@@ -329,8 +353,8 @@ function execute1(id){
         cars.pop();
     }
         var content =  '';
-        // content += ('<input type="text" name="id" value= "'+id+'"id="para" class="form-control" style="visibility: hidden;margin-top: opx;"/>');
-        content += '<button type="button" class="btn btn-primary" onClick="loadXMLDoc2('+id+')">调用</button>';
+        content += ('<input type="text" name="Neturl" id="Neturl" class="form-control" style="width: 280px;" placeholder=""/>');
+        content += '<button type="button" class="btn btn-primary" onClick="loadXMLDocNet('+id+')">调用</button>';
         $("#json-result").html(content);
 }
 
@@ -410,7 +434,7 @@ function stopDS(id){
 function refreshTask(){
     $.getJSON('/task/getTask',function(ret){
         var template = "<button type='button' class='btn btn-info' onClick='refreshTask()'>刷新</button><table class=\"table table-striped table-bordered\" border=1>";
-        template +=  "<tr style=\"background-color:red\"><td>任务ID</td><td>数据源ID</td><td>状态</td><td>创建人</td><td>创建时间</td><td>操作</td></tr>";
+        template +=  "<tr class=\"success\" style=\"color:white\"><td>任务ID</td><td>数据源ID</td><td>状态</td><td>创建人</td><td>创建时间</td><td>操作</td></tr>";
         for (var i=0; i<ret.length; i++){
             template += ("<tr>");
             template += ("<td>"+ ret[i].taskID +"</td>");
@@ -476,7 +500,7 @@ function taskInfo(id) {
 
 $.getJSON('/getNetDataSource',function(ret){
     var template = "<table id=\"dsTable1\" class=\"table table-striped table-bordered\" border=1>";
-    template +=  "<tr style=\"background-color:red\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
+    template +=  "<tr class=\"success\" style=\"color:white\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
     for (var i=0; i<ret.length; i++){
         template += ("<tr>");
         template += ("<td>"+ ret[i].dsId +"</td>");
@@ -499,7 +523,7 @@ $.getJSON('/getNetDataSource',function(ret){
 
 $.getJSON('/DataSource/showDataSource',function(ret){
     var template = "<table id=\"dsTable\" class=\"table table-striped table-bordered\" border=1>";
-    template +=  "<tr style=\"background-color:red\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
+    template +=  "<tr class=\"success\" style=\"color:white\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
     for (var i=0; i<ret.length; i++){
         template += ("<tr>");
         template += ("<td>"+ ret[i].dsId +"</td>");
@@ -524,7 +548,7 @@ $.getJSON('/getUser',function(ret){
 
 $.getJSON('/DataSource/showDataSource',function(ret){
     var template = "<table id=\"dsTablepz\" class=\"table table-striped table-bordered\" border=1>";
-    template +=  "<tr style=\"background-color:red\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
+    template +=  "<tr class=\"success\" style=\"color:white\"><td>数据源ID</td><td>数据源名称</td><td>描述</td><td>类型</td><td>创建时间</td><td>操作</td></tr>";
     for (var i=0; i<ret.length; i++){
         template += ("<tr>");
         template += ("<td>"+ ret[i].dsId +"</td>");
@@ -546,7 +570,7 @@ $.getJSON('/DataSource/showDataSource',function(ret){
 
 $.getJSON('/Android/showDataSource',function(ret){
     var template = "<table id=\"dsTableAd\" class=\"table table-striped table-bordered\" border=1>";
-    template +=  "<tr style=\"background-color:red\"><td>数据源ID</td><td>数据源名称</td><td>操作</td></tr>";
+    template +=  "<tr class=\"success\" style=\"color:white\"><td>数据源ID</td><td>数据源名称</td><td>操作</td></tr>";
     for (var i=0; i<ret.length; i++){
         template += ("<tr>");
         template += ("<td>"+ ret[i].id +"</td>");
@@ -562,7 +586,7 @@ $.getJSON('/Android/showDataSource',function(ret){
 
 $.getJSON('/task/getTask',function(ret){
     var template = "<button type='button' class='btn btn-info' onClick='refreshTask()'>刷新</button><table id=\"dsTablert\" class=\"table table-striped table-bordered\" border=1>";
-    template +=  "<tr style=\"background-color:red\"><td>任务ID</td><td>数据源ID</td><td>状态</td><td>创建人</td><td>创建时间</td><td>操作</td></tr>";
+    template +=  "<tr class=\"success\" style=\"color:white\"><td>任务ID</td><td>数据源ID</td><td>状态</td><td>创建人</td><td>创建时间</td><td>操作</td></tr>";
     for (var i=0; i<ret.length; i++){
         template += ("<tr>");
         template += ("<td>"+ ret[i].taskID +"</td>");

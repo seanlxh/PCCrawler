@@ -30,6 +30,7 @@ public class FileUploadController {
     private pathImpl pathService;
     @Resource
     private androidDatasourceImpl androidDataService;
+    @Resource NetDataSourceImpl NetDataSourceImpl;
     /*
      * 获取file.html页面
      */
@@ -268,7 +269,17 @@ public class FileUploadController {
             entity.setApppackage("default");
             androidDataService.save(entity);
             return "success";
-
+        }
+        else if(ptype == 2){
+            NetDataSource entity = new NetDataSource();
+            entity.setDsName(name);
+            entity.setDsDesc(desc);
+            entity.setType(1);
+            entity.setCsvname("default");
+            entity.setTimestamp(System.currentTimeMillis());
+            entity.setState(1);
+            NetDataSourceImpl.save(entity);
+            return "success";
         }
         else{
             return "success";

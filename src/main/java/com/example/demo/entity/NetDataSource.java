@@ -1,6 +1,9 @@
 package com.example.demo.entity;
 
 public class NetDataSource {
+    public NetDataSource() {
+    }
+
     private Long dsId;
 
     private String csvname;
@@ -26,6 +29,7 @@ public class NetDataSource {
     public String getCsvname() {
         return csvname;
     }
+
 
     public void setCsvname(String csvname) {
         this.csvname = csvname == null ? null : csvname.trim();
